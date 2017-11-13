@@ -3,14 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Move : MonoBehaviour {
-
+	
 	private bool still_moving;
 	private Vector2 destination, pivot;
+	private float fallingSpeed;
+	private int dest_y;
 
 	// Use this for initialization
 	void Start () {
 		still_moving = false;
 		pivot = transform.position;
+		fallingSpeed = 1.5f;
+	}
+
+	IEnumerator SmoothFall (Vector3 end){
+		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+		while (sqrRemainingDistance > float.Epsilon) {
+			Vector3 new_pos = Vector3.MoveTowards (transform.position, end, Time.deltaTime / fallingSpeed);
+			transform.position = new_pos;
+			sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+			yield return null;
+		}
 	}
 	
 	// Update is called once per frame
@@ -34,30 +47,19 @@ public class Move : MonoBehaviour {
 				still_moving = false;
 			} else {
 				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);	
-//				if(destination != pivot)
 				transform.position = destination - pivot;
 			}
 		}
 
-//		if (keep_updating) {
-//			if (!Input.GetMouseButtonUp (0)) {
-//				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);	
-//			} else {
-//				keep_updating = false;
-//			}
-//		}
-//
-//		if (still_moving) {
-//			transform.position = destination - pivot;
-//			Vector2 curr = transform.position;
-//			if ((curr - (destination - pivot)).sqrMagnitude < float.Epsilon && !keep_updating) {
-//				still_moving = false;
-//				pivot = transform.position;
-//			}
-//				
-//		}
-
+		if (!still_moving && Managers.Grid.validArea (this.transform)) {
+			int x = (int)transform.position.x;
+			transform.position = new Vector2(x, transform.position.y);
+			Vector3 dest = new Vector3 (x, Managers.Grid.getMinY (x), 0);
+			StartCoroutine (SmoothFall (dest));
+		}
 
 	}
+
+
 		
 }
