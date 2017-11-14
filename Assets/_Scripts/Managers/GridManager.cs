@@ -12,29 +12,40 @@ public class GridManager : MonoBehaviour {
 	public Column[] gameGridcol = new Column[3];
 	public Column[] validCol = new Column[2];
 
+	[HideInInspector]
+	public int[] min_y;
+
+	[HideInInspector]
+	public int cells;
+
 	private float left, right, top, bot;
-	private int[] min_y;
 
 	void Awake(){
 		left = gameGridcol[0].row[1].position.x - 0.5f;
 		right = gameGridcol [0].row [2].position.x + 0.5f;
-		bot = gameGridcol [0].row [0].position.y - .5f;
-		top = validCol [1].row [0].position.y;
+		bot = gameGridcol [0].row [0].position.y - 0.5f;
+		top = validCol [1].row [0].position.y + 2.5f;
 		min_y = new int[3]{0, 0, 0};
+		cells = 9;
 	}
 
-	public int getMinY(int index){return min_y[index];}
+	public int getMinY(int index){
+		return min_y[index];
+	}
 
-	public bool validArea(Transform obj){
-		int pos_x = (int)obj.position.x;
-		int pos_y = (int)obj.position.y;
+	public void updateGrid(int pos_x, int[] a, int c){
+		int diff = pos_x - (int)gameGridcol [0].row [0].position.x;
+		for (int i = diff; i < 3; i++) {
+			min_y [i] += a [i - diff];
+		}
+		cells -= c;
+	}
 
-		if (pos_x < left || pos_x > right || pos_y < bot || pos_y > top)
+	public bool validArea(float x1, float x2, float y1, float y2){
+
+		if (x1 <= left || x2 >= right || y1 < bot || y2 > top) {
 			return false;
+		}
 		return true;
 	}
-
-//	public void updateGrid(Transform obj){
-//		
-//	}
 }

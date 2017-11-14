@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4064158070560626}
-  - component: {fileID: 114960518238072672}
   - component: {fileID: 61247505266803864}
   - component: {fileID: 61674875912518336}
+  - component: {fileID: 114940598967085080}
   m_Layer: 0
   m_Name: Shape2
   m_TagString: Untagged
@@ -172,7 +172,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: -0.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,7 +211,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &114960518238072672
+--- !u!114 &114940598967085080
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -219,9 +219,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1356654370945078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8d57ba6203d4ff3944f5e72166cc1a, type: 3}
+  m_Script: {fileID: 11500000, guid: b859eede76ea2466fabfb079c1c17f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  still_moving: 0
+  accumulate: 
+  counts: 0
 --- !u!212 &212116756871651444
 SpriteRenderer:
   m_ObjectHideFlags: 1
