@@ -58,7 +58,7 @@ public class Move : MonoBehaviour {
 	}
 
 	private int getDestY(int x){
-		
+
 		int height = Mathf.Max (accumulate [0], accumulate [1], accumulate [2]);
 		int offset = Managers.Grid.mid - 1, index_offset = 0;
 		int y_max = 0;
@@ -79,18 +79,15 @@ public class Move : MonoBehaviour {
 				height = heights [i + index_offset];
 			}
 		}
-		Debug.Log (Managers.Grid.min_y [1]);
-
 						
 		if (y_max + height > 3) {
-//			Debug.Log (y_max);
 			return -1;
 		}
 		if (height == Mathf.Max (accumulate [0], accumulate [1], accumulate [2])) {
-			Managers.Grid.updateGrid ((int)transform.position.x, accumulate, counts);
+			Managers.Grid.updateGrid (x + offset, accumulate, counts);
 			return (int)y_max + (int)Managers.Grid.gameGridcol [0].row [0].transform.position.y;
 		}
-		Managers.Grid.updateGrid ((int)transform.position.x, heights, counts);
+		Managers.Grid.updateGrid (x + offset, heights, counts);
 		return (int)y_max + (int)Managers.Grid.gameGridcol[0].row[0].transform.position.y - height;
 
 	}
@@ -136,11 +133,11 @@ public class Move : MonoBehaviour {
 			if (y == -1) {
 				return;
 			}
+
 			transform.position = new Vector2(x, transform.position.y);
 			Vector3 dest = new Vector3 (x, y, 0);
 			StartCoroutine (SmoothFall (dest));
 			done = true;
-//			Managers.Grid.updateGrid ((int)transform.position.x, accumulate, counts);
 		}
 			
 	}

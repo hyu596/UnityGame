@@ -49,6 +49,7 @@ public class GridManager : MonoBehaviour {
 		for (int i = start; i < end; i++) {
 			min_y [i] += a [i + index_offset];
 		}
+		cells -= c;
 	}
 
 	public bool validArea(float x1, float x2, float y1, float y2){
