@@ -18,6 +18,9 @@ public class GridManager : MonoBehaviour {
 	[HideInInspector]
 	public int cells;
 
+	[HideInInspector]
+	public int mid;
+
 	private float left, right, top, bot;
 
 	void Awake(){
@@ -27,22 +30,28 @@ public class GridManager : MonoBehaviour {
 		top = validCol [1].row [0].position.y + 2.5f;
 		min_y = new int[3]{0, 0, 0};
 		cells = 9;
+		mid = (int) gameGridcol [0].row [0].transform.position.x;
 	}
 
 	public int getMinY(int index){
-		return min_y[index];
+		return min_y[index - (mid - 1)];
 	}
 
 	public void updateGrid(int pos_x, int[] a, int c){
-		int diff = pos_x - (int)gameGridcol [0].row [0].position.x;
-		for (int i = diff; i < 3; i++) {
-			min_y [i] += a [i - diff];
+		int x = pos_x - (mid - 1);
+		int index_offset = 1 - x;
+
+		int start = 0, end = 3;
+		if (x == 2)
+			start = 1;
+		else if (x == 0)
+			end = 2;
+		for (int i = start; i < end; i++) {
+			min_y [i] += a [i + index_offset];
 		}
-		cells -= c;
 	}
 
 	public bool validArea(float x1, float x2, float y1, float y2){
-
 		if (x1 <= left || x2 >= right || y1 < bot || y2 > top) {
 			return false;
 		}
