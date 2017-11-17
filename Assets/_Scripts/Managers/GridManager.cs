@@ -74,11 +74,11 @@ public class GridManager : MonoBehaviour {
 		return true;
 	}
 
-    public void SpawnNextShape(Vector2 place)
+    public static void  SpawnNextShape(Vector2 place)
     {
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
     }
-    string GetRandomShape()
+    static string GetRandomShape()
     {
         int randomindex = Random.Range(1, 8);
         string randomShapeName = "Shape";

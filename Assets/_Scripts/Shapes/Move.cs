@@ -138,7 +138,9 @@ public class Move : MonoBehaviour {
 			Vector3 dest = new Vector3 (x, y, 0);
 			StartCoroutine (SmoothFall (dest));
 			done = true;
-		}
+            Vector2 lin2_1 = new Vector2(0, -3);
+            GridManager.SpawnNextShape(lin2_1);
+        }
 			
 	}
 
