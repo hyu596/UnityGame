@@ -10,7 +10,7 @@ public class Move : MonoBehaviour {
 	private int[] accumulate;
 	private int[] heights;
 	private int counts;
-
+    private Vector2 origin_place;
 	private Vector2 destination, pivot;
 	private float fallingSpeed;
 	private int dest_y;
@@ -54,7 +54,6 @@ public class Move : MonoBehaviour {
 		return Managers.Grid.validArea (transform.position.x + x1, 
 			 transform.position.x + x2, transform.position.y + y1,
 			 transform.position.y + y2);
-		
 	}
 
 	private int getDestY(int x){
@@ -109,8 +108,8 @@ public class Move : MonoBehaviour {
 			
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);
-
-			if(hit.collider != null && hit.collider.transform == this.transform)
+            origin_place = transform.position;
+            if (hit.collider != null && hit.collider.transform == this.transform)
 			{
 				still_moving = true;
 				pivot = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
@@ -121,27 +120,30 @@ public class Move : MonoBehaviour {
 		if (still_moving) {
 			if (Input.GetMouseButtonUp (0)) {
 				still_moving = false;
+                if (!checkForValid())
+                {
+                    transform.position = origin_place;
+                }
 			} else {
 				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);	
 				transform.position = destination - pivot;
 			}
 		}
-
-		if (!still_moving && checkForValid()) {
+        
+        if(!still_moving && checkForValid()) {
 			int x = (int) Mathf.Round(transform.position.x);
 			int y = getDestY (x - (Managers.Grid.mid - 1));
 			if (y == -1) {
 				return;
-			}
+			} 
 
 			transform.position = new Vector2(x, transform.position.y);
 			Vector3 dest = new Vector3 (x, y, 0);
 			StartCoroutine (SmoothFall (dest));
 			done = true;
             Vector2 lin2_1 = new Vector2(0, -3);
-            GridManager.SpawnNextShape(lin2_1);
+            GridManager.SpawnNextShape(origin_place);
         }
-			
 	}
 
 
