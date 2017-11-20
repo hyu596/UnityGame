@@ -7,16 +7,20 @@ public class Move : MonoBehaviour {
 	[HideInInspector]
 	public bool still_moving;
 
-	private int[] accumulate;
-	private int[] heights;
-	private int counts;
+	[HideInInspector]
+	public int[] accumulate;
+
+	[HideInInspector]
+	public int[] heights;
+
+	[HideInInspector]
+	public int counts;
 
 	private Vector2 destination, pivot;
 	private float fallingSpeed;
 	private int dest_y;
 	private bool done;
 
-	// Use this for initialization
 	protected void Awake () {
 		still_moving = false;
 		pivot = transform.position;
@@ -57,41 +61,6 @@ public class Move : MonoBehaviour {
 		
 	}
 
-	private int getDestY(int x){
-
-		int height = Mathf.Max (accumulate [0], accumulate [1], accumulate [2]);
-		int offset = Managers.Grid.mid - 1, index_offset = 0;
-		int y_max = 0;
-
-		int start = 0, end = 3;
-		if (x == 2) {
-			start = 1;
-			index_offset = -1;
-		} else if (x == 0) {
-			end = 2;
-			index_offset = 1;
-		}
-		
-		for (int i = start; i < end; i++) {
-			int y_potential = Managers.Grid.getMinY (i + offset);
-			if (accumulate [i + index_offset] != 0 && y_potential > y_max) {
-				y_max = y_potential;
-				height = heights [i + index_offset];
-			}
-		}
-						
-		if (y_max + height > 3) {
-			return -1;
-		}
-		if (height == Mathf.Max (accumulate [0], accumulate [1], accumulate [2])) {
-			Managers.Grid.updateGrid (x + offset, accumulate, counts);
-			return (int)y_max + (int)Managers.Grid.gameGridcol [0].row [0].transform.position.y;
-		}
-		Managers.Grid.updateGrid (x + offset, heights, counts);
-		return (int)y_max + (int)Managers.Grid.gameGridcol[0].row[0].transform.position.y - height;
-
-	}
-
 	protected void init(int[] a, int[] h, int c){
 		for (int i = 0; i < 3; i++) {
 			accumulate [i] = a [i];
@@ -128,16 +97,26 @@ public class Move : MonoBehaviour {
 		}
 
 		if (!still_moving && checkForValid()) {
+			
 			int x = (int) Mathf.Round(transform.position.x);
-			int y = getDestY (x - (Managers.Grid.mid - 1));
+			int y = Managers.Grid.findPosY(this, x);
 			if (y == -1) {
 				return;
+			} else {
+				
+				transform.position = new Vector2(x, transform.position.y);
+				Vector3 dest = new Vector3 (x, y + Managers.Grid.bot_y, 0);
+				StartCoroutine (SmoothFall (dest));
+				done = true;
+
+				Managers.Grid.updateGrid (this, y);
+
+				BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
+				foreach (BoxCollider2D c in collider) {
+					c.enabled = false;
+				}
 			}
 
-			transform.position = new Vector2(x, transform.position.y);
-			Vector3 dest = new Vector3 (x, y, 0);
-			StartCoroutine (SmoothFall (dest));
-			done = true;
 		}
 			
 	}
