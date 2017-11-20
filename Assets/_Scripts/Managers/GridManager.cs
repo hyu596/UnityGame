@@ -22,9 +22,27 @@ public class GridManager : MonoBehaviour {
 	public int mid_x, mid_y, bot_y;
 
 	private float left, right, top, bot;
+<<<<<<< HEAD
 	private bool[] check;
+=======
+    Vector2 lin1_1 = new Vector2(-5, -3);
+    Vector2 lin1_2 = new Vector2(-5, -6);
+    Vector2 lin2_1 = new Vector2(0, -3);
+    Vector2 lin2_2 = new Vector2(0, -6);
+    Vector2 lin3_1 = new Vector2(4, -3);
+    Vector2 lin3_2 = new Vector2(4, -6);
+    private void Start()
+    {
+        SpawnNextShape(lin1_1);
+        SpawnNextShape(lin1_2);
+        SpawnNextShape(lin2_1);
+        SpawnNextShape(lin2_2);
+        SpawnNextShape(lin3_1);
+        SpawnNextShape(lin3_2);
+    }
+>>>>>>> 8875ba45e58738ac0ae3d94b7f2f333e1d626e8d
 
-	void Awake(){
+    void Awake(){
 		left = gameGridcol[0].row[1].position.x - 0.5f;
 		right = gameGridcol [0].row [2].position.x + 0.5f;
 		bot = gameGridcol [0].row [0].position.y - 0.5f;
@@ -96,6 +114,7 @@ public class GridManager : MonoBehaviour {
 		return true;
 	}
 
+<<<<<<< HEAD
 	public bool checkForSingleBlock(int x, int y){
 		x = x - (mid_x - 1);
 		y = y - (mid_y - 1);
@@ -138,4 +157,45 @@ public class GridManager : MonoBehaviour {
 		return -1;
 	}
 		
+=======
+    public static void  SpawnNextShape(Vector2 place)
+    {
+        GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
+    }
+    static string GetRandomShape()
+    {
+        int randomindex = Random.Range(1, 8);
+        string randomShapeName = "Shape";
+        
+        switch(randomindex)
+        {
+            case 1:
+                randomShapeName = "Shape1_1";
+                break;
+            case 2:
+                randomShapeName = "Shape1_2";
+                break;
+            case 3:
+                randomShapeName = "Shape2_2";
+                break;
+            case 4:
+                randomShapeName = "Shape2_3";
+                break;
+            case 5:
+                randomShapeName = "Shape2_4";
+                break;
+            case 6:
+                randomShapeName = "Shape3_1";
+                break;
+            case 7:
+                randomShapeName = "Shape3_2";
+                break;
+            case 8:
+                randomShapeName = "Shape2_4";
+                break;
+        }
+        return randomShapeName;
+
+    }
+>>>>>>> 8875ba45e58738ac0ae3d94b7f2f333e1d626e8d
 }
