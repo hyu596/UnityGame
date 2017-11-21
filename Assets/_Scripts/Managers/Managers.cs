@@ -12,19 +12,20 @@ public class Managers : MonoBehaviour {
 
 	private static GridManager[] _gridManager;
 	private int maxSize;
-
-	public static GridManager[] Grid{
+    private static RandomManager randomManager;
+    public static GridManager[] Grid{
 		get { return _gridManager;}
 	}
 
-	void Awake(){
+
+    void Awake(){
 
 		maxSize = 5;
 		index = 0;
 		_gridManager = new GridManager[maxSize];
 
 		addGrid (2, 1);
-		addGrid (2, -5);
+		addGrid (6, 1);
 
 	}
 
