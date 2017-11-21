@@ -13,15 +13,27 @@ public class Shape4 : MonoBehaviour {
 	private Vector2 destination, pivot;
 	private int dest_y;
 	private bool done;
+	private GridManager grid_temp;
 
 	// Use this for initialization
-	protected void Awake () {
+	void Awake () {
 		still_moving = false;
 		pivot = transform.position;
 		done = false;
 	}
+
+	private bool checkForValid(int x, int y){
+		foreach(GridManager g in Managers.Grid) {
+			if (g && g.checkForSingleBlock (x, y)) {
+				grid_temp = g;
+				return true;
+			}
+		}
+		return false;
+	}
 		
-	protected void Update () {
+		
+	void Update () {
 
 		if (done)
 			return;
@@ -52,10 +64,9 @@ public class Shape4 : MonoBehaviour {
 
 			int x = (int)Mathf.Round (transform.position.x);
 			int y = (int)Mathf.Round (transform.position.y);
-			if (Managers.Grid.checkForSingleBlock (x, y)) {
-				Debug.Log ("sa");
+			if (checkForValid (x, y)) {
 				transform.position = new Vector2 (x, y);
-				Managers.Grid.updateGridForSingleBlock (x, y);
+				grid_temp.updateGridForSingleBlock (x, y);
 				done = true;
 
 				BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
