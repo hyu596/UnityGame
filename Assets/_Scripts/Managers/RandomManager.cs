@@ -2,109 +2,117 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomManager : MonoBehaviour {
+public class RandomManager : MonoBehaviour
+{
+
+    private int r1;
+    private int r2;
+    private int c1;
+    private int c2;
+    private int c3;
+
+    private Vector2 lin1_1;
+    private Vector2 lin1_2;
+    private Vector2 lin2_1;
+    private Vector2 lin2_2;
+    private Vector2 lin3_1;
+    private Vector2 lin3_2;
+
+    private Move[] allwatingObject;
 
 
-    public static int r1 = -3;
-    public static int r2 = -6;
-    public static int c1 = 1;
-    public static int c2 = 5;
-    public static int c3 = 9;
-
-    public static Vector2 lin1_1 = new Vector2(c1, r1);
-    public static Vector2 lin1_2 = new Vector2(c1, r2);
-    public static Vector2 lin2_1 = new Vector2(c2, r1);
-    public static Vector2 lin2_2 = new Vector2(c2, r2);
-    public static Vector2 lin3_1 = new Vector2(c3, r1);
-    public static Vector2 lin3_2 = new Vector2(c3, r2);
-
-    public static List<GameObject> allwatingObject = new List<GameObject>();
-
-    // Use this for initialization
-    private void Start()
+    public void init(float x, float y)
     {
-        SpawnNextShape(lin1_1);
-        SpawnNextShape(lin1_2);
-        SpawnNextShape(lin2_1);
-        SpawnNextShape(lin2_2);
-        SpawnNextShape(lin3_1);
-        SpawnNextShape(lin3_2);
-        allwatingObject[1].GetComponent<Renderer>().material.color = Color.red;
+
+        c1 = (int)(x - 4f);
+        c2 = (int)x;
+        c3 = (int)(x + 4f);
+        r1 = (int)(y + 1.5f);
+        r2 = (int)(y - 1.5f);
+
+        lin1_1 = new Vector2(c1, r1);
+        lin1_2 = new Vector2(c1, r2);
+        lin2_1 = new Vector2(c2, r1);
+        lin2_2 = new Vector2(c2, r2);
+        lin3_1 = new Vector2(c3, r1);
+        lin3_2 = new Vector2(c3, r2);
+
+        allwatingObject = new Move[6];
+
+        generateFirstLine();
+        generateSecondLine();
     }
-//    public bool checkInsidG(Vector2 pos)
-//    {
-//        return ((int)pos.x >= 0 && (int)pos.x <= waitingGridW && (int)pos.y >= 0 && (int)pos.y <= waitingGridH);
-//    }
-    public static bool IsFirstlineEmpt()
+
+    private void generateFirstLine()
     {
-        
-        for (int i = 0; i < allwatingObject.Count; i+=1)
+        SpawnNextShape(lin1_1, 0);
+        SpawnNextShape(lin2_1, 1);
+        SpawnNextShape(lin3_1, 2);
+    }
+
+    private void generateSecondLine()
+    {
+
+        SpawnNextShape(lin1_2, 3);
+        SpawnNextShape(lin2_2, 4);
+        SpawnNextShape(lin3_2, 5);
+
+    }
+
+    void LateUpdate()
+    {
+        if (IsFirstlineEmpt())
         {
-
-            if(allwatingObject[i].transform.position.y == r1)
-            {
-                return false;
-            }
-            
+            Move2ndLineUp();
         }
+    }
 
+
+    private bool IsFirstlineEmpt()
+    {
+
+        for (int i = 0; i < 3; i += 1)
+        {
+            if (!allwatingObject[i].isDone())
+                return false;
+        }
 
         return true;
     }
-    public static void removeNotWatingObject()
+
+    public void Move2ndLineUp()
     {
-        List<GameObject> newallwatingObject = new List<GameObject>();
-        for (int i = 0; i < allwatingObject.Count; i += 1)
+        for (int i = 0; i < 3; i += 1)
         {
-            if (allwatingObject[i].transform.position.y == -5)
-            {
-                newallwatingObject.Add(allwatingObject[i]);
-            }
-        }
-        allwatingObject = newallwatingObject;
-    }
-    public static void Move2ndLineUp()
-    {
-        for (int i = 0; i < allwatingObject.Count; i += 1)
-        {
-           
-            int x = (int)allwatingObject[i].transform.position.x; 
+            allwatingObject[i] = allwatingObject[i + 3];
+            int x = (int)allwatingObject[i].transform.position.x;
             int y = (int)allwatingObject[i].transform.position.y;
-            if (y < r1) {
+            if (y < r1)
+            {
                 allwatingObject[i].transform.position = new Vector2(x, r1);
             }
-            
+
         }
+        generateSecondLine();
     }
 
-    // Update is called once per frame
-    void Update () {
-	}
-
-    public static void SpawnNextShape(Vector2 place)
+    public void SpawnNextShape(Vector2 place, int index)
     {
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
-        allwatingObject.Add(nextShape);
+        Move move = nextShape.GetComponent<Move>();
+        allwatingObject[index] = move;
     }
 
-    static string GetRandomShape()
+    string GetRandomShape()
     {
         int randomindex = Random.Range(1, 4);
-        string randomShapeName = "Shape";
-
-        switch (randomindex)
-        {
-            case 1:
-                randomShapeName = "Shape1_1";
-                break;
-            case 2:
-                randomShapeName = "Shape2_1";
-                break;
-            case 3:
-                randomShapeName = "Shape3_1";
-                break;
-        }
-        return randomShapeName;
+        return "Shape" + randomindex + "_1";
 
     }
+
+    public bool isInFirstLine(int y)
+    {
+        return y == r1;
+    }
+
 }

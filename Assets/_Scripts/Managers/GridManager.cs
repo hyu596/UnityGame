@@ -46,20 +46,7 @@ public class GridManager : MonoBehaviour {
 	public int getMinY(int index){
 		return min_y[index];
 	}
-
-//	public int checkForImp(){
-//		int rst = 0;
-//		for (int i = 0; i < 9; i++) {
-//			if (check [i])
-//				rst++;
-//		}
-//		return rst;
-////		if (check [1])
-////			Debug.Log ("aaa");
-////		else
-////			Debug.Log ("bbb");
-//	}
-
+		
 	public void updateGrid(Move obj, int y){
 		
 		int x = (int)obj.transform.position.x - (mid_x - 1);

@@ -2,44 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(GridManager))]
-public class Managers : MonoBehaviour {
+[RequireComponent(typeof(RandomManager))]
+public class Managers : MonoBehaviour
+{
 
-	public GameObject gridManager;
+    public GameObject gridManager;
 
-	[HideInInspector]
-	public int index;
+    [HideInInspector]
+    public int index;
 
-	private static GridManager[] _gridManager;
-	private int maxSize;
-    private static RandomManager randomManager;
-    public static GridManager[] Grid{
-		get { return _gridManager;}
-	}
+    private static GridManager[] _gridManager;
+    private static RandomManager _randomManager;
+    private int maxSize;
 
+    public static GridManager[] Grid
+    {
+        get { return _gridManager; }
+    }
 
-    void Awake(){
+    public static RandomManager Random
+    {
+        get { return _randomManager; }
+    }
 
-		maxSize = 5;
-		index = 0;
-		_gridManager = new GridManager[maxSize];
+    void Awake()
+    {
 
-		addGrid (2, 1);
-		addGrid (6, 1);
+        maxSize = 5;
+        index = 0;
+        _gridManager = new GridManager[maxSize];
 
-	}
+        _randomManager = GetComponent<RandomManager>();
+        _randomManager.init(5f, -4.5f);
 
-	private void addGrid(int x, int y){
-		if (!reachMax ()) {
-			GameObject gameObject = (GameObject)Instantiate (gridManager, new Vector3 (x, y, 0f), Quaternion.identity);
-			GridManager grid = gameObject.GetComponent<GridManager> ();
-			grid.init (x, y);
-			_gridManager [index] = grid;
-			index ++;
-		}
-	}
+        addGrid(-2, 1);
+        addGrid(2, 1);
+        addGrid(6, 1);
 
-	public bool reachMax(){
-		return index >= maxSize - 1;
-	}
+    }
+
+    private void addGrid(int x, int y)
+    {
+        if (!reachMax())
+        {
+            GameObject gameObject = (GameObject)Instantiate(gridManager, new Vector3(x, y, 0f), Quaternion.identity);
+            GridManager grid = gameObject.GetComponent<GridManager>();
+            grid.init(x, y);
+            _gridManager[index] = grid;
+            index++;
+        }
+    }
+
+    public bool reachMax()
+    {
+        return index >= maxSize - 1;
+    }
 }
