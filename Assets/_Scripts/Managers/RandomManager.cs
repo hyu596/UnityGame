@@ -113,7 +113,7 @@ public class RandomManager : MonoBehaviour
 
         }
 
-        //the number of Lonely shape try to add should base the point
+        //the number of Lonely shape try to add should base the point or if full grid
         tryTOAddLonely(1);
 
 
