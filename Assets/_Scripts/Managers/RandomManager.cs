@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RandomManager : MonoBehaviour
 {
@@ -27,11 +28,18 @@ public class RandomManager : MonoBehaviour
 
 
 
+	private bool moving;
+
+
+
 
     private Move[] allwatingObject;
     private Shape4[] allLonely;
     private Color[] colors;
     private Vector2[] LonelyPlace;
+
+	public Text scoreText;
+	private int score;
 
 
     public void init(float x, float y)
@@ -64,7 +72,14 @@ public class RandomManager : MonoBehaviour
 
         generateFirstLine();
         generateSecondLine();
+
         generateLonely();
+
+
+		moving = false;
+
+		score = 0;
+
     }
     private void generateLonely()
     {
@@ -95,9 +110,20 @@ public class RandomManager : MonoBehaviour
         if (IsFirstlineEmpt())
         {
             Move2ndLineUp();
+
         }
+
         //the number of Lonely shape try to add should base the point
         tryTOAddLonely(1);
+
+
+		if (moving) {
+			if ((!allwatingObject [0].isRunning ()) && (!allwatingObject [1].isRunning ()) && (!allwatingObject [2].isRunning ())) {
+				generateSecondLine ();
+				moving = false;
+			}
+		}
+
     }
 
 
@@ -116,18 +142,20 @@ public class RandomManager : MonoBehaviour
 
     public void Move2ndLineUp()
     {
+		moving = true;
+
         for (int i = 0; i < 3; i += 1)
         {
             allwatingObject[i] = allwatingObject[i + 3];
             int x = (int)allwatingObject[i].transform.position.x;
             int y = (int)allwatingObject[i].transform.position.y;
-            if (y < r1)
+			if (y < r1 && !allwatingObject[i].isDone())
             {
-                allwatingObject[i].transform.position = new Vector2(x, r1);
+				StartCoroutine (allwatingObject [i].SmoothFall (new Vector3 (x, r1, 0f)));
             }
 
         }
-        generateSecondLine();
+
     }
     public void tryTOAddLonely ( int NumbertryToadd)
     {
@@ -157,11 +185,13 @@ public class RandomManager : MonoBehaviour
     {
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
         Move move = nextShape.GetComponent<Move>();
-        allwatingObject[index] = move;
         Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
 		int picked = Random.Range (0, 3);
 		foreach (Renderer r in allchild)
 			r.GetComponent<SpriteRenderer> ().color = colors [picked];
+
+		move.assignColor (picked);
+		allwatingObject[index] = move;
     }
 
     string GetRandomShape()
@@ -180,5 +210,10 @@ public class RandomManager : MonoBehaviour
     {
         return y == r1;
     }
+
+	public void increScore(int s){
+		score += s;
+		scoreText.text = "Score: " + score;
+	}
 
 }
