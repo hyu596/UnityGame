@@ -31,8 +31,8 @@ public class Shape4 : MonoBehaviour {
 		}
 		return false;
 	}
-		
-		
+
+
 	void Update () {
 
 		if (done)
@@ -73,6 +73,8 @@ public class Shape4 : MonoBehaviour {
 				foreach (BoxCollider2D c in collider) {
 					c.enabled = false;
 				}
+
+				grid_temp.addShape (this.gameObject);
 
 			}
 

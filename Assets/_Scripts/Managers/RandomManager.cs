@@ -20,12 +20,10 @@ public class RandomManager : MonoBehaviour
     
 
     private Move[] allwatingObject;
+    private Color[] colors;
 
     private int maxNumberlonelyShap;
     public int NumbertryToadd;
-
-
-
     public void init(float x, float y)
     {
 
@@ -43,6 +41,7 @@ public class RandomManager : MonoBehaviour
         lin3_2 = new Vector2(c3, r2);
 
         allwatingObject = new Move[6];
+		colors = new Color[3]{ Color.red, Color.blue, Color.green };
 
         generateFirstLine();
         generateSecondLine();
@@ -71,6 +70,7 @@ public class RandomManager : MonoBehaviour
             Move2ndLineUp();
         }
     }
+
 
 
     private bool IsFirstlineEmpt()
@@ -106,13 +106,13 @@ public class RandomManager : MonoBehaviour
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
         Move move = nextShape.GetComponent<Move>();
         allwatingObject[index] = move;
+
+  
         Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
-        Color[] colors = { Color.red, Color.blue, Color.green };
-        int picked = Random.Range(0, 3);
-        foreach (Renderer x in allchild)
-        {
-            x.GetComponent<SpriteRenderer>().color = colors [picked];
-        }
+
+		int picked = Random.Range (0, 3);
+		foreach (Renderer r in allchild)
+			r.GetComponent<SpriteRenderer> ().color = colors [picked];
     }
 
     string GetRandomShape()
