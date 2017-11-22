@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CcolorChange : MonoBehaviour
+public class colorM : MonoBehaviour
 {
 
     // Use this for initialization
     void Start()
     {
-        GetComponent<Renderer>().material.color = Color.red;
+        gameObject.GetComponent<SpriteRenderer>().color = Color.green;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(transform.position.x);
-
-        GetComponent<Renderer>().material.color = Color.red;
-
+        gameObject.GetComponent<SpriteRenderer>().color = Color.green;
     }
 
 }

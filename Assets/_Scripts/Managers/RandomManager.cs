@@ -101,6 +101,33 @@ public class RandomManager : MonoBehaviour
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
         Move move = nextShape.GetComponent<Move>();
         allwatingObject[index] = move;
+  
+        Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
+        int color = GetRandomColor();
+        if (color == 0)
+        {
+            foreach (Renderer x in allchild)
+            {
+                x.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+        }
+        if (color == 1)
+        {
+            foreach (Renderer x in allchild)
+            {
+                x.GetComponent<SpriteRenderer>().color = Color.blue;
+            }
+        }
+        if (color == 2)
+        {
+            foreach (Renderer x in allchild)
+            {
+                x.GetComponent<SpriteRenderer>().color = Color.green;
+            }
+        }
+
+
+
     }
 
     string GetRandomShape()
@@ -108,6 +135,12 @@ public class RandomManager : MonoBehaviour
         int randomindex = Random.Range(1, 4);
         return "Shape" + randomindex + "_1";
 
+    }
+    int GetRandomColor()
+    {
+        int randomindex = Random.Range(0, 3);
+
+        return randomindex;
     }
 
     public bool isInFirstLine(int y)
