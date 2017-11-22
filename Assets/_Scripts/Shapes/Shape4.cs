@@ -12,7 +12,7 @@ public class Shape4 : MonoBehaviour {
 
 	private Vector2 destination, pivot;
 	private int dest_y;
-	private bool done;
+	public bool done;
 	private GridManager grid_temp;
 
 	// Use this for initialization
