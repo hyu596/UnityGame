@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(RandomManager))]
 public class Managers : MonoBehaviour
@@ -30,6 +31,7 @@ public class Managers : MonoBehaviour
 
         maxSize = 5;
         index = 0;
+
         _gridManager = new GridManager[maxSize];
 
         _randomManager = GetComponent<RandomManager>();

@@ -52,9 +52,6 @@ public class GridManager : MonoBehaviour {
 
 	public void updateGrid(Move obj, int y){
 
-		Debug.Log (y);
-		Debug.Log (obj.transform.position.y);
-
 		int x = (int)obj.transform.position.x - (mid_x - 1);
 		int index_offset = 1 - x;
 
@@ -78,6 +75,8 @@ public class GridManager : MonoBehaviour {
 		cells -= obj.counts;
 
 		addShape (obj.gameObject);
+
+		Managers.Random.increScore (obj.counts);
 	}
 
 	public void updateGridForSingleBlock(int x, int y){
@@ -88,6 +87,9 @@ public class GridManager : MonoBehaviour {
 		}
 		check [x + 3 * y] = true;
 		cells -= 1;
+
+		Managers.Random.increScore (1);
+
 	}
 
 
@@ -140,10 +142,24 @@ public class GridManager : MonoBehaviour {
 	}
 
 	void Update(){
+		bool sameColor = true;
+		int temp = -1;
 		if (cells == 0) {
 			foreach (GameObject obj in fixedShapes) {
+				if (temp == -1)
+					temp = obj.GetComponent<Move> ().getColor ();
+				else {
+					if (temp != obj.GetComponent<Move> ().getColor ())
+						sameColor = false;
+				}
 				Destroy (obj);
 			}
+
+			if (sameColor)
+				Managers.Random.increScore (10);
+			else
+				Managers.Random.increScore (1);
+			
 			fixedShapes.Clear ();
 			revertOrigin ();
 		}

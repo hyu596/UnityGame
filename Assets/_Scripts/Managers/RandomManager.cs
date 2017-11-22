@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RandomManager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class RandomManager : MonoBehaviour
     private Move[] allwatingObject;
 
 	private Color[] colors;
+
+	public Text scoreText;
+	private int score;
 
 
     public void init(float x, float y)
@@ -48,6 +52,8 @@ public class RandomManager : MonoBehaviour
         generateSecondLine();
 
 		moving = false;
+
+		score = 0;
     }
 
     private void generateFirstLine()
@@ -117,13 +123,15 @@ public class RandomManager : MonoBehaviour
     {
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
         Move move = nextShape.GetComponent<Move>();
-        allwatingObject[index] = move;
   
         Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
 
 		int picked = Random.Range (0, 3);
 		foreach (Renderer r in allchild)
 			r.GetComponent<SpriteRenderer> ().color = colors [picked];
+
+		move.assignColor (picked);
+		allwatingObject[index] = move;
     }
 
     string GetRandomShape()
@@ -137,5 +145,10 @@ public class RandomManager : MonoBehaviour
     {
         return y == r1;
     }
+
+	public void increScore(int s){
+		score += s;
+		scoreText.text = "Score: " + score;
+	}
 
 }

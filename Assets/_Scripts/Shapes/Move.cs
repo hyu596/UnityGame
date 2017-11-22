@@ -20,7 +20,7 @@ public class Move : MonoBehaviour {
 
 	private Vector2 destination, pivot;
 	private float fallingSpeed;
-	private int dest_y;
+	private int dest_y, color;
 	private bool done, coroutine;
 	private GridManager grid_temp;
 
@@ -32,6 +32,7 @@ public class Move : MonoBehaviour {
 		coroutine = false;
 		accumulate = new int[3];
 		heights = new int[3];
+		color = 0;
 	}
 
 	public IEnumerator SmoothFall (Vector3 end, int y=-100){ 
@@ -100,7 +101,6 @@ public class Move : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);
 			origin_place = transform.position;
-			//			if (hit.collider != null && hit.collider.transform == this.transform && Managers.Random.isInFirstLine((int) origin_place.y))
 			if (hit.collider != null && hit.collider.transform == this.transform)
 			{
 				still_moving = true;
@@ -144,7 +144,13 @@ public class Move : MonoBehaviour {
 	public bool isDone(){ return done; }
 	public bool isRunning() {
 		return coroutine;
-	} 
+	}  
+
+	public void assignColor(int c) {
+		color = c;
+	}
+
+	public int getColor(){return color;}
 
 
 
