@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour {
 	private float left, right, top, bot;
 	private bool[] check;
 	private Transform trans;
+	private List<GameObject> fixedShapes;
 
 	public void init(int x, int y){
 		
@@ -40,12 +41,14 @@ public class GridManager : MonoBehaviour {
 		mid_y = bot_y + 1;
 		check = new bool[9]{ false, false, false, false, false, false, false, false, false };
 
-		Debug.Log (mid_x);
+		fixedShapes = new List<GameObject> ();
 	}
 
 	public int getMinY(int index){
 		return min_y[index];
 	}
+
+	public void addShape(GameObject obj){fixedShapes.Add(obj);}
 		
 	public void updateGrid(Move obj, int y){
 		
@@ -79,6 +82,7 @@ public class GridManager : MonoBehaviour {
 			min_y [x] = y + 1;
 		}
 		check [x + 3 * y] = true;
+		cells -= 1;
 	}
 
 
@@ -128,6 +132,24 @@ public class GridManager : MonoBehaviour {
 				return attempt_y;
 		}
 		return -1;
+	}
+
+	void Update(){
+		if (cells == 0) {
+			foreach (GameObject obj in fixedShapes) {
+				Destroy (obj);
+			}
+			fixedShapes.Clear ();
+			revertOrigin ();
+		}
+	}
+
+	private void revertOrigin(){
+		
+		min_y = new int[3]{0, 0, 0};
+		cells = 9;
+		check = new bool[9]{ false, false, false, false, false, false, false, false, false };
+
 	}
 		
 }

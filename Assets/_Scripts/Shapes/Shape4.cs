@@ -74,6 +74,8 @@ public class Shape4 : MonoBehaviour {
 					c.enabled = false;
 				}
 
+				grid_temp.addShape (this.gameObject);
+
 			}
 
 		}

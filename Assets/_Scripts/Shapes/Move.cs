@@ -93,7 +93,8 @@ public class Move : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);
             origin_place = transform.position;
-			if (hit.collider != null && hit.collider.transform == this.transform && Managers.Random.isInFirstLine((int) origin_place.y))
+//			if (hit.collider != null && hit.collider.transform == this.transform && Managers.Random.isInFirstLine((int) origin_place.y))
+			if (hit.collider != null && hit.collider.transform == this.transform)
 			{
 				still_moving = true;
 				pivot = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
@@ -123,6 +124,8 @@ public class Move : MonoBehaviour {
 						foreach (BoxCollider2D c in collider) {
 							c.enabled = false;
 						}
+
+						grid_temp.addShape (this.gameObject);
 					}
 				}
             } else {
