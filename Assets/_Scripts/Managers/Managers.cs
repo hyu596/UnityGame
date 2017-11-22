@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(GridManager))]
+[RequireComponent(typeof(RandomManager))]
 public class Managers : MonoBehaviour {
 
 	public GameObject gridManager;
@@ -11,20 +11,29 @@ public class Managers : MonoBehaviour {
 	public int index;
 
 	private static GridManager[] _gridManager;
+    private static RandomManager _randomManager;
 	private int maxSize;
 
-	public static GridManager[] Grid{
+    public static GridManager[] Grid{
 		get { return _gridManager;}
 	}
 
-	void Awake(){
+	public static RandomManager Random{
+		get { return _randomManager; }
+	}
+
+    void Awake(){
 
 		maxSize = 5;
 		index = 0;
 		_gridManager = new GridManager[maxSize];
 
+		_randomManager = GetComponent<RandomManager> ();
+		_randomManager.init (5f, -4.5f);
+
+		addGrid (-2, 1);
 		addGrid (2, 1);
-		addGrid (2, -5);
+		addGrid (6, 1);
 
 	}
 
