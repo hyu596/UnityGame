@@ -52,6 +52,9 @@ public class GridManager : MonoBehaviour {
 
 	public void updateGrid(Move obj, int y){
 
+		Debug.Log (y);
+		Debug.Log (obj.transform.position.y);
+
 		int x = (int)obj.transform.position.x - (mid_x - 1);
 		int index_offset = 1 - x;
 
@@ -73,6 +76,8 @@ public class GridManager : MonoBehaviour {
 		}
 
 		cells -= obj.counts;
+
+		addShape (obj.gameObject);
 	}
 
 	public void updateGridForSingleBlock(int x, int y){

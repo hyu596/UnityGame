@@ -18,6 +18,8 @@ public class RandomManager : MonoBehaviour
     private Vector2 lin3_1;
     private Vector2 lin3_2;
 
+	private bool moving;
+
     private Move[] allwatingObject;
 
 	private Color[] colors;
@@ -44,6 +46,8 @@ public class RandomManager : MonoBehaviour
 
         generateFirstLine();
         generateSecondLine();
+
+		moving = false;
     }
 
     private void generateFirstLine()
@@ -67,7 +71,15 @@ public class RandomManager : MonoBehaviour
         if (IsFirstlineEmpt())
         {
             Move2ndLineUp();
+
         }
+
+		if (moving) {
+			if ((!allwatingObject [0].isRunning ()) && (!allwatingObject [1].isRunning ()) && (!allwatingObject [2].isRunning ())) {
+				generateSecondLine ();
+				moving = false;
+			}
+		}
     }
 
 
@@ -85,18 +97,20 @@ public class RandomManager : MonoBehaviour
 
     public void Move2ndLineUp()
     {
+		moving = true;
+
         for (int i = 0; i < 3; i += 1)
         {
             allwatingObject[i] = allwatingObject[i + 3];
             int x = (int)allwatingObject[i].transform.position.x;
             int y = (int)allwatingObject[i].transform.position.y;
-            if (y < r1)
+			if (y < r1 && !allwatingObject[i].isDone())
             {
-                allwatingObject[i].transform.position = new Vector2(x, r1);
+				StartCoroutine (allwatingObject [i].SmoothFall (new Vector3 (x, r1, 0f)));
             }
 
         }
-        generateSecondLine();
+
     }
 
     public void SpawnNextShape(Vector2 place, int index)
