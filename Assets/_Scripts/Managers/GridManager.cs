@@ -24,9 +24,10 @@ public class GridManager : MonoBehaviour {
 	private float left, right, top, bot;
 	private bool[] check;
 	private Transform trans;
+	private List<GameObject> fixedShapes;
 
 	public void init(int x, int y){
-		
+
 		mid_x = x;
 		bot_y = y;
 
@@ -40,15 +41,17 @@ public class GridManager : MonoBehaviour {
 		mid_y = bot_y + 1;
 		check = new bool[9]{ false, false, false, false, false, false, false, false, false };
 
-		Debug.Log (mid_x);
+		fixedShapes = new List<GameObject> ();
 	}
 
 	public int getMinY(int index){
 		return min_y[index];
 	}
-		
+
+	public void addShape(GameObject obj){fixedShapes.Add(obj);}
+
 	public void updateGrid(Move obj, int y){
-		
+
 		int x = (int)obj.transform.position.x - (mid_x - 1);
 		int index_offset = 1 - x;
 
@@ -57,7 +60,7 @@ public class GridManager : MonoBehaviour {
 			start = 1;
 		else if (x == 0)
 			end = 2;
-		
+
 		for (int i = start; i < end; i++) {
 			int a = obj.accumulate [i + index_offset], h = obj.heights [i + index_offset];
 			for(int j=0; j<Mathf.Min(a, h); j++){
@@ -70,6 +73,10 @@ public class GridManager : MonoBehaviour {
 		}
 
 		cells -= obj.counts;
+
+		addShape (obj.gameObject);
+
+		Managers.Random.increScore (obj.counts);
 	}
 
 	public void updateGridForSingleBlock(int x, int y){
@@ -79,6 +86,10 @@ public class GridManager : MonoBehaviour {
 			min_y [x] = y + 1;
 		}
 		check [x + 3 * y] = true;
+		cells -= 1;
+
+		Managers.Random.increScore (1);
+
 	}
 
 
@@ -99,7 +110,7 @@ public class GridManager : MonoBehaviour {
 	}
 
 	public int findPosY(Move obj, int x){
-		
+
 		x -= mid_x - 1;
 		int index_offset = 1 - x;
 
@@ -129,5 +140,37 @@ public class GridManager : MonoBehaviour {
 		}
 		return -1;
 	}
-		
+
+	void Update(){
+		bool sameColor = true;
+		int temp = -1;
+		if (cells == 0) {
+			foreach (GameObject obj in fixedShapes) {
+				if (temp == -1)
+					temp = obj.GetComponent<Move> ().getColor ();
+				else {
+					if (temp != obj.GetComponent<Move> ().getColor ())
+						sameColor = false;
+				}
+				Destroy (obj);
+			}
+
+			if (sameColor)
+				Managers.Random.increScore (10);
+			else
+				Managers.Random.increScore (1);
+			
+			fixedShapes.Clear ();
+			revertOrigin ();
+		}
+	}
+
+	private void revertOrigin(){
+
+		min_y = new int[3]{0, 0, 0};
+		cells = 9;
+		check = new bool[9]{ false, false, false, false, false, false, false, false, false };
+
+	}
+
 }
