@@ -130,7 +130,6 @@ public class Move : MonoBehaviour {
 				Vector3 dest = new Vector3 (x, y + grid_temp.bot_y, 0);
 				StartCoroutine (SmoothFall (dest));
 				done = true;
-
 				grid_temp.updateGrid (this, y);
 				if (RandomManager.IsFirstlineEmpt())
 				{

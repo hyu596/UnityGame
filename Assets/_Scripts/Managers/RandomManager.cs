@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomManager : MonoBehaviour {
-    //    public static int waitingGridW = 11;
-    //    public static int waitingGridH = 5;
+
+
     public static int r1 = -3;
     public static int r2 = -6;
     public static int c1 = 1;
@@ -23,13 +23,13 @@ public class RandomManager : MonoBehaviour {
     // Use this for initialization
     private void Start()
     {
-        Debug.Log("sadfasdf");
         SpawnNextShape(lin1_1);
         SpawnNextShape(lin1_2);
         SpawnNextShape(lin2_1);
         SpawnNextShape(lin2_2);
         SpawnNextShape(lin3_1);
         SpawnNextShape(lin3_2);
+        allwatingObject[1].GetComponent<Renderer>().material.color = Color.red;
     }
 //    public bool checkInsidG(Vector2 pos)
 //    {
