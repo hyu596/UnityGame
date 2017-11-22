@@ -17,8 +17,13 @@ public class RandomManager : MonoBehaviour
     private Vector2 lin2_2;
     private Vector2 lin3_1;
     private Vector2 lin3_2;
+    
 
     private Move[] allwatingObject;
+
+    private int maxNumberlonelyShap;
+    public int NumbertryToadd;
+
 
 
     public void init(float x, float y)
@@ -101,33 +106,13 @@ public class RandomManager : MonoBehaviour
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
         Move move = nextShape.GetComponent<Move>();
         allwatingObject[index] = move;
-  
         Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
-        int color = GetRandomColor();
-        if (color == 0)
+        Color[] colors = { Color.red, Color.blue, Color.green };
+        int picked = Random.Range(0, 3);
+        foreach (Renderer x in allchild)
         {
-            foreach (Renderer x in allchild)
-            {
-                x.GetComponent<SpriteRenderer>().color = Color.red;
-            }
+            x.GetComponent<SpriteRenderer>().color = colors [picked];
         }
-        if (color == 1)
-        {
-            foreach (Renderer x in allchild)
-            {
-                x.GetComponent<SpriteRenderer>().color = Color.blue;
-            }
-        }
-        if (color == 2)
-        {
-            foreach (Renderer x in allchild)
-            {
-                x.GetComponent<SpriteRenderer>().color = Color.green;
-            }
-        }
-
-
-
     }
 
     string GetRandomShape()
@@ -139,7 +124,6 @@ public class RandomManager : MonoBehaviour
     int GetRandomColor()
     {
         int randomindex = Random.Range(0, 3);
-
         return randomindex;
     }
 
