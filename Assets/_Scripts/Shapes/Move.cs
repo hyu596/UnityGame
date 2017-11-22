@@ -16,9 +16,9 @@ public class Move : MonoBehaviour {
 	[HideInInspector]
 	public int counts;
 
-    private Vector2 origin_place;
+	private Vector2 origin_place;
 
-    private Vector2 destination, pivot;
+	private Vector2 destination, pivot;
 	private float fallingSpeed;
 	private int dest_y;
 	private bool done;
@@ -33,7 +33,7 @@ public class Move : MonoBehaviour {
 		heights = new int[3];
 	}
 
-    public IEnumerator SmoothFall (Vector3 end){
+	public IEnumerator SmoothFall (Vector3 end){
 		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 		while (sqrRemainingDistance > float.Epsilon) {
 			Vector3 new_pos = Vector3.MoveTowards (transform.position, end, Time.deltaTime / fallingSpeed);
@@ -63,8 +63,8 @@ public class Move : MonoBehaviour {
 		foreach(GridManager g in Managers.Grid) {
 
 			if (g && g.validArea (transform.position.x + x1,
-				   transform.position.x + x2, transform.position.y + y1,
-				   transform.position.y + y2)) {
+				transform.position.x + x2, transform.position.y + y1,
+				transform.position.y + y2)) {
 				grid_temp = g;
 				return true;
 			}
@@ -92,8 +92,8 @@ public class Move : MonoBehaviour {
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);
-            origin_place = transform.position;
-//			if (hit.collider != null && hit.collider.transform == this.transform && Managers.Random.isInFirstLine((int) origin_place.y))
+			origin_place = transform.position;
+			//			if (hit.collider != null && hit.collider.transform == this.transform && Managers.Random.isInFirstLine((int) origin_place.y))
 			if (hit.collider != null && hit.collider.transform == this.transform)
 			{
 				still_moving = true;
@@ -128,7 +128,7 @@ public class Move : MonoBehaviour {
 						grid_temp.addShape (this.gameObject);
 					}
 				}
-            } else {
+			} else {
 				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				transform.position = destination - pivot;
 			}

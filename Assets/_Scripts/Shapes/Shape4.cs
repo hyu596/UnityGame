@@ -31,8 +31,8 @@ public class Shape4 : MonoBehaviour {
 		}
 		return false;
 	}
-		
-		
+
+
 	void Update () {
 
 		if (done)
