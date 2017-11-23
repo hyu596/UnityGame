@@ -11,7 +11,7 @@ public class Shape4 : MonoBehaviour {
 	public int counts;
 
 	private Vector2 destination, pivot;
-	private int dest_y;
+	private int dest_y, color;
 	private bool done;
 	private GridManager grid_temp;
 
@@ -20,6 +20,11 @@ public class Shape4 : MonoBehaviour {
 		still_moving = false;
 		pivot = transform.position;
 		done = false;
+		color = 0;
+	}
+
+	public int getColor(){
+		return color;
 	}
 
 	private bool checkForValid(int x, int y){

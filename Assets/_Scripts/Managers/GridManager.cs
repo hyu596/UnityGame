@@ -149,9 +149,14 @@ public class GridManager : MonoBehaviour {
 				if (temp == -1)
 					temp = obj.GetComponent<Move> ().getColor ();
 				else {
-					if (temp != obj.GetComponent<Move> ().getColor ())
+					if (obj.GetComponent<Move> () && temp != obj.GetComponent<Move> ().getColor ())
+						sameColor = false;
+					else if (obj.GetComponent<Shape4> () && temp != obj.GetComponent<Shape4> ().getColor ())
 						sameColor = false;
 				}
+//				Destroy (obj);
+			}
+			foreach (GameObject obj in fixedShapes) {
 				Destroy (obj);
 			}
 
