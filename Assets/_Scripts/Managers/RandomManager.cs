@@ -179,6 +179,8 @@ public class RandomManager : MonoBehaviour
         allLonely[index] = move;
         int picked = Random.Range(0, 3);
         newLonely.GetComponent<SpriteRenderer>().color = colors[picked];
+
+		move.assignColor (picked);
     }
 
     public void SpawnNextShape(Vector2 place, int index)
@@ -208,8 +210,6 @@ public class RandomManager : MonoBehaviour
 
     public bool isInFirstLine(int y)
     {
-		Debug.Log (y);
-		Debug.Log (r1);
         return y == r1;
     }
 
