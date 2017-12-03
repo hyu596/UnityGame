@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour {
+public class Move : MonoBehaviour
+{
 
-	[HideInInspector]
-	public bool still_moving;
+    [HideInInspector]
+    public bool still_moving;
 
-	[HideInInspector]
-	public int[] accumulate;
+    [HideInInspector]
+    public int[] accumulate;
 
-	[HideInInspector]
-	public int[] heights;
+    [HideInInspector]
+    public int[] heights;
 
-	[HideInInspector]
-	public int counts;
+    [HideInInspector]
+    public int counts;
 
 	private Vector2 origin_place;
-
 	private Vector2 destination, pivot;
 	private float fallingSpeed;
 	private int dest_y, color;
@@ -159,6 +159,7 @@ public class Move : MonoBehaviour {
 	}
 
 	public int getColor(){return color;}
+
 
 
 

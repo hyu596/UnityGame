@@ -40,7 +40,10 @@ public class Managers : MonoBehaviour
         _randomManager = GetComponent<RandomManager>();
         _randomManager.init(5f, -4.5f);
 
+
+
 //        addGrid(-2, 1);
+
 
     }
 
