@@ -9,8 +9,8 @@ public class Shape4 : MonoBehaviour {
 
 	[HideInInspector]
 	public int counts;
-
-	private Vector2 destination, pivot;
+//    public static Vector2 origin_place;
+    private Vector2 destination, pivot;
 	private int dest_y, color;
 	public bool done;
 
@@ -20,7 +20,8 @@ public class Shape4 : MonoBehaviour {
 	void Awake () {
 		still_moving = false;
 		pivot = transform.position;
-		done = false;
+        //origin_place = transform.position;
+        done = false;
 		color = 0;
 	}
 
@@ -48,6 +49,7 @@ public class Shape4 : MonoBehaviour {
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);
+            
 
 			if(hit.collider != null && hit.collider.transform == this.transform)
 			{
