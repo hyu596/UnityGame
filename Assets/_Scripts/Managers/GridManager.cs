@@ -151,8 +151,9 @@ public class GridManager : MonoBehaviour {
 				else {
 					if (obj.GetComponent<Move> () && temp != obj.GetComponent<Move> ().getColor ())
 						sameColor = false;
-					else if (obj.GetComponent<Shape4> () && temp != obj.GetComponent<Shape4> ().getColor ())
+					else if (obj.GetComponent<Shape4> () && temp != obj.GetComponent<Shape4> ().getColor ()) {
 						sameColor = false;
+					}
 				}
 //				Destroy (obj);
 			}
