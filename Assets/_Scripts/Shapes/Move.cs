@@ -112,6 +112,7 @@ public class Move : MonoBehaviour {
 		if (still_moving) {
 			if (Input.GetMouseButtonUp (0)) {
 				still_moving = false;
+//				if (!checkForValid () || !Managers.Random.isInFirstLine(((int)origin_place.y))) {
 				if (!checkForValid ()) {
 					transform.position = origin_place;
 				} else {
@@ -125,6 +126,13 @@ public class Move : MonoBehaviour {
 						Vector3 dest = new Vector3 (x, y + grid_temp.bot_y, 0);
 						StartCoroutine (SmoothFall (dest, y));
 						done = true;
+
+						SpriteRenderer[] spriteRenderer = GetComponentsInChildren<SpriteRenderer> ();
+						foreach(SpriteRenderer s in spriteRenderer){
+							s.sortingLayerName = "Grid";
+						}
+
+						this.transform.SetParent (grid_temp.transform);
 
 						BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
 						foreach (BoxCollider2D c in collider) {

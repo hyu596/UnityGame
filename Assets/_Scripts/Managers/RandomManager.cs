@@ -143,6 +143,8 @@ public class RandomManager : MonoBehaviour
 
     public bool isInFirstLine(int y)
     {
+		Debug.Log (y);
+		Debug.Log (r1);
         return y == r1;
     }
 

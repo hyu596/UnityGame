@@ -74,6 +74,9 @@ public class Shape4 : MonoBehaviour {
 				grid_temp.updateGridForSingleBlock (x, y);
 				done = true;
 
+				SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer> ();
+				spriteRenderer.sortingLayerName = "Grid";
+
 				BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
 				foreach (BoxCollider2D c in collider) {
 					c.enabled = false;
