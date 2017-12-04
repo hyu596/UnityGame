@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Grid
+  - start
+  - quit
   layers:
   - Default
   - TransparentFX
