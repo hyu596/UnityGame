@@ -35,6 +35,7 @@ public class Move : MonoBehaviour
 		color = 0;
 	}
 
+
 	public IEnumerator SmoothFall (Vector3 end, int y=-100){ 
 		
 		coroutine = true;
@@ -83,6 +84,11 @@ public class Move : MonoBehaviour
 
 	}
 
+    private bool abletomove()
+    {
+        return transform.position.y > -4 && TimeManager.totalTime > 0;
+    }
+
 	protected void init(int[] a, int[] h, int c){
 		for (int i = 0; i < 3; i++) {
 			accumulate [i] = a [i];
@@ -96,7 +102,7 @@ public class Move : MonoBehaviour
 		if (done)
 			return;
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && abletomove()) {
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);

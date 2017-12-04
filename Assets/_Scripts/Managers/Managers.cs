@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RandomManager))]
+[RequireComponent(typeof(TimeManager))]
 public class Managers : MonoBehaviour
 {
 
@@ -14,6 +15,8 @@ public class Managers : MonoBehaviour
 
     private static GridManager[] _gridManager;
     private static RandomManager _randomManager;
+	private static TimeManager _timeManager;
+
     private int maxSize;
 
     public static GridManager[] Grid
@@ -26,6 +29,10 @@ public class Managers : MonoBehaviour
         get { return _randomManager; }
     }
 
+	public static TimeManager Time{
+		get { return _timeManager; }
+	}
+
     void Awake()
     {
 
@@ -34,15 +41,14 @@ public class Managers : MonoBehaviour
 
         _gridManager = new GridManager[maxSize];
 
+		addGrid(-2, 1);
 		addGrid(2, 1);
-		addGrid(6, 1);
 
         _randomManager = GetComponent<RandomManager>();
-        _randomManager.init(5f, -4.5f);
+        _randomManager.init(3f, -4.5f);
 
+		_timeManager = GetComponent<TimeManager> ();
 
-
-//        addGrid(-2, 1);
 
 
     }
@@ -58,6 +64,7 @@ public class Managers : MonoBehaviour
             index++;
         }
     }
+
 
     public bool reachMax()
     {

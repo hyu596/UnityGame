@@ -9,7 +9,8 @@ public class Shape4 : MonoBehaviour {
 
 	[HideInInspector]
 	public int counts;
-//    public static Vector2 origin_place;
+
+	private Vector2 origin_place;
     private Vector2 destination, pivot;
 	private int dest_y, color;
 	public bool done;
@@ -25,8 +26,17 @@ public class Shape4 : MonoBehaviour {
 		color = 0;
 	}
 
-	public int getColor(){
+    private bool abletomove()
+    {
+        return TimeManager.totalTime > 0;
+    }
+
+    public int getColor(){
 		return color;
+	}
+
+	public void assignColor(int c) {
+		color = c;
 	}
 
 	private bool checkForValid(int x, int y){
@@ -45,11 +55,12 @@ public class Shape4 : MonoBehaviour {
 		if (done)
 			return;
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && abletomove()) {
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);
             
+			origin_place = transform.position;
 
 			if(hit.collider != null && hit.collider.transform == this.transform)
 			{
@@ -61,35 +72,60 @@ public class Shape4 : MonoBehaviour {
 
 		if (still_moving) {
 			if (Input.GetMouseButtonUp (0)) {
+
 				still_moving = false;
+				
+				int x = (int)Mathf.Round (transform.position.x);
+				int y = (int)Mathf.Round (transform.position.y);
+				if (checkForValid (x, y)) {
+					transform.position = new Vector2 (x, y);
+					grid_temp.updateGridForSingleBlock (x, y);
+					done = true;
+
+					SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer> ();
+					spriteRenderer.sortingLayerName = "Grid";
+
+					BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
+					foreach (BoxCollider2D c in collider) {
+						c.enabled = false;
+					}
+
+					grid_temp.addShape (this.gameObject);
+
+				}
+				else
+					transform.position = origin_place;
+				
 			} else {
 				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);	
 				transform.position = destination - pivot;
 			}
 		}
 
-		if (!still_moving) {
-
-			int x = (int)Mathf.Round (transform.position.x);
-			int y = (int)Mathf.Round (transform.position.y);
-			if (checkForValid (x, y)) {
-				transform.position = new Vector2 (x, y);
-				grid_temp.updateGridForSingleBlock (x, y);
-				done = true;
-
-				SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer> ();
-				spriteRenderer.sortingLayerName = "Grid";
-
-				BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
-				foreach (BoxCollider2D c in collider) {
-					c.enabled = false;
-				}
-
-				grid_temp.addShape (this.gameObject);
-
-			}
-
-		}
+//		if (!still_moving) {
+//
+//			int x = (int)Mathf.Round (transform.position.x);
+//			int y = (int)Mathf.Round (transform.position.y);
+//			if (checkForValid (x, y)) {
+//				transform.position = new Vector2 (x, y);
+//				grid_temp.updateGridForSingleBlock (x, y);
+//				done = true;
+//
+//				SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer> ();
+//				spriteRenderer.sortingLayerName = "Grid";
+//
+//				BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
+//				foreach (BoxCollider2D c in collider) {
+//					c.enabled = false;
+//				}
+//
+//				grid_temp.addShape (this.gameObject);
+//
+//			}
+//			else
+//				transform.position = origin_place;
+//
+//		}
 
 	}
 

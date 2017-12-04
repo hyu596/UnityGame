@@ -26,12 +26,7 @@ public class RandomManager : MonoBehaviour
     private Vector2 lonely2;
     private Vector2 lonely3;
 
-
-
 	private bool moving;
-
-
-
 
     private Move[] allwatingObject;
     private Shape4[] allLonely;
@@ -45,15 +40,15 @@ public class RandomManager : MonoBehaviour
     public void init(float x, float y)
     {
 
-        c1 = (int)(x - 4f);
-        c2 = (int)x;
-        c3 = (int)(x + 4f);
+        c1 = (int)(x - 7f);
+        c2 = (int)(x -3);
+        c3 = (int)(x+1);
         r1 = (int)(y + 1.5f);
-        r2 = (int)(y - 1.5f);
+        r2 = (int)(y - 3f);
         lonelyX = (int) (x  - 8f);
-        lonelyY1 = (int)(y + 5.5f);
-        lonelyY2 = (int)(y + 4f);
-        lonelyY3 = (int)(y + 3.5f); 
+        lonelyY1 = (int)(y + 8f);
+        lonelyY2 = (int)(y + 10f);
+        lonelyY3 = (int)(y + 6f); 
 
         lin1_1 = new Vector2(c1, r1);
         lin1_2 = new Vector2(c1, r2);
@@ -110,7 +105,7 @@ public class RandomManager : MonoBehaviour
         if (IsFirstlineEmpt())
         {
             Move2ndLineUp();
-
+			Managers.Time.newRound ();
         }
 
         //the number of Lonely shape try to add should base the point or if full grid
@@ -174,11 +169,13 @@ public class RandomManager : MonoBehaviour
     }
     public void SpeawnLonely (int index)
     {
-        GameObject newLonely = (GameObject)Instantiate(Resources.Load("Shape4", typeof(GameObject)), LonelyPlace[index] , Quaternion.identity);
+        GameObject newLonely = (GameObject)Instantiate(Resources.Load("Lonely", typeof(GameObject)), LonelyPlace[index] , Quaternion.identity);
         Shape4 move = newLonely.GetComponent<Shape4>();
         allLonely[index] = move;
         int picked = Random.Range(0, 3);
         newLonely.GetComponent<SpriteRenderer>().color = colors[picked];
+
+		move.assignColor (picked);
     }
 
     public void SpawnNextShape(Vector2 place, int index)
@@ -196,20 +193,20 @@ public class RandomManager : MonoBehaviour
 
     string GetRandomShape()
     {
-        int randomindex = Random.Range(1, 4);
-        return "Shape" + randomindex + "_1";
+        int randomindex = Random.Range(1, 8);
+        Debug.Log("Shape" + randomindex);
+        return "Shape" + randomindex;
 
     }
     int GetRandomColor()
     {
         int randomindex = Random.Range(0, 3);
+        Debug.Log(randomindex);
         return randomindex;
     }
 
     public bool isInFirstLine(int y)
     {
-		Debug.Log (y);
-		Debug.Log (r1);
         return y == r1;
     }
 
