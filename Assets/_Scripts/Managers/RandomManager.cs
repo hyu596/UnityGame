@@ -44,11 +44,11 @@ public class RandomManager : MonoBehaviour
         c2 = (int)(x -3);
         c3 = (int)(x+1);
         r1 = (int)(y + 1.5f);
-        r2 = (int)(y - 1.5f);
+        r2 = (int)(y - 3f);
         lonelyX = (int) (x  - 8f);
-        lonelyY1 = (int)(y + 7f);
-        lonelyY2 = (int)(y + 9f);
-        lonelyY3 = (int)(y + 4f); 
+        lonelyY1 = (int)(y + 8f);
+        lonelyY2 = (int)(y + 10f);
+        lonelyY3 = (int)(y + 6f); 
 
         lin1_1 = new Vector2(c1, r1);
         lin1_2 = new Vector2(c1, r2);
@@ -169,7 +169,7 @@ public class RandomManager : MonoBehaviour
     }
     public void SpeawnLonely (int index)
     {
-        GameObject newLonely = (GameObject)Instantiate(Resources.Load("Shape4", typeof(GameObject)), LonelyPlace[index] , Quaternion.identity);
+        GameObject newLonely = (GameObject)Instantiate(Resources.Load("Lonely", typeof(GameObject)), LonelyPlace[index] , Quaternion.identity);
         Shape4 move = newLonely.GetComponent<Shape4>();
         allLonely[index] = move;
         int picked = Random.Range(0, 3);
@@ -193,8 +193,8 @@ public class RandomManager : MonoBehaviour
 
     string GetRandomShape()
     {
-        int randomindex = Random.Range(1, 4);
-        return "Shape" + randomindex + "_1";
+        int randomindex = Random.Range(1, 9);
+        return "Shape" + randomindex;
 
     }
     int GetRandomColor()
