@@ -193,13 +193,15 @@ public class RandomManager : MonoBehaviour
 
     string GetRandomShape()
     {
-        int randomindex = Random.Range(1, 9);
+        int randomindex = Random.Range(1, 8);
+        Debug.Log("Shape" + randomindex);
         return "Shape" + randomindex;
 
     }
     int GetRandomColor()
     {
         int randomindex = Random.Range(0, 3);
+        Debug.Log(randomindex);
         return randomindex;
     }
 

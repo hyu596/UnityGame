@@ -25,7 +25,7 @@ public class MouseHover : MonoBehaviour {
 	void Update(){
 		if (Input.GetMouseButtonDown (0) && text.color == Color.cyan) {
 			if (this.tag == "start")
-				SceneManager.LoadScene (0);
+				SceneManager.LoadScene (1);
 			else if (this.tag == "quit")
 				Application.Quit ();
 		}
