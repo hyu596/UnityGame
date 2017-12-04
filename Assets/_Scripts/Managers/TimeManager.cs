@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour {
 
@@ -13,8 +14,8 @@ public class TimeManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		totalTime = 30f;
-		round = 5f;
+		totalTime = 15f;
+		round = 10f;
 	}
 	
 	// Update is called once per frame
@@ -28,10 +29,15 @@ public class TimeManager : MonoBehaviour {
 			if(totalTime > 0)
 				remainingTime.text = "Remaining Time: " + totalTime.ToString("0.0");
 		}
+
+		if (totalTime <= 0) {
+			StaticClass.CrossSceneInformation = Managers.Random.scoreText.text;
+			SceneManager.LoadScene (2);
+		}
 	}
 
 	public void newRound(){
-		round = 5f;
+		round = 10f;
 	}
 
 }
