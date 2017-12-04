@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour {
 	public Text remainingTime;
 	public Text roundTime;
 
-	private float totalTime;
+	public static float totalTime;
 	private float round;
 
 	// Use this for initialization

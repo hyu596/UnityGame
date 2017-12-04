@@ -40,15 +40,15 @@ public class RandomManager : MonoBehaviour
     public void init(float x, float y)
     {
 
-        c1 = (int)(x - 4f);
-        c2 = (int)x;
-        c3 = (int)(x + 4f);
+        c1 = (int)(x - 7f);
+        c2 = (int)(x -3);
+        c3 = (int)(x+1);
         r1 = (int)(y + 1.5f);
         r2 = (int)(y - 1.5f);
         lonelyX = (int) (x  - 8f);
-        lonelyY1 = (int)(y + 5.5f);
-        lonelyY2 = (int)(y + 4f);
-        lonelyY3 = (int)(y + 3.5f); 
+        lonelyY1 = (int)(y + 7f);
+        lonelyY2 = (int)(y + 9f);
+        lonelyY3 = (int)(y + 4f); 
 
         lin1_1 = new Vector2(c1, r1);
         lin1_2 = new Vector2(c1, r2);
