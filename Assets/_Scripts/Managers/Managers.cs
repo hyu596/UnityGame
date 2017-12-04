@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RandomManager))]
+[RequireComponent(typeof(TimeManager))]
 public class Managers : MonoBehaviour
 {
 
@@ -14,6 +15,8 @@ public class Managers : MonoBehaviour
 
     private static GridManager[] _gridManager;
     private static RandomManager _randomManager;
+	private static TimeManager _timeManager;
+
     private int maxSize;
 
     public static GridManager[] Grid
@@ -25,6 +28,10 @@ public class Managers : MonoBehaviour
     {
         get { return _randomManager; }
     }
+
+	public static TimeManager Time{
+		get { return _timeManager; }
+	}
 
     void Awake()
     {
@@ -39,6 +46,8 @@ public class Managers : MonoBehaviour
 
         _randomManager = GetComponent<RandomManager>();
         _randomManager.init(5f, -4.5f);
+
+		_timeManager = GetComponent<TimeManager> ();
 
 
 

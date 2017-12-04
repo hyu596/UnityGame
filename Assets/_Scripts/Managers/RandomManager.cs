@@ -26,12 +26,7 @@ public class RandomManager : MonoBehaviour
     private Vector2 lonely2;
     private Vector2 lonely3;
 
-
-
 	private bool moving;
-
-
-
 
     private Move[] allwatingObject;
     private Shape4[] allLonely;
@@ -110,7 +105,7 @@ public class RandomManager : MonoBehaviour
         if (IsFirstlineEmpt())
         {
             Move2ndLineUp();
-
+			Managers.Time.newRound ();
         }
 
         //the number of Lonely shape try to add should base the point or if full grid
