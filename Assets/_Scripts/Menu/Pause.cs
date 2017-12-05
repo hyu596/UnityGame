@@ -25,17 +25,18 @@ public class Pause : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Input.GetMouseButtonDown (0) && spriteRenderer.color == Color.cyan) {
+		if (Input.GetMouseButtonUp (0) && spriteRenderer.color == Color.cyan) {
+
 
 			OnMouseExit ();
-			
+
 			if (Time.timeScale == 0) {
-				
+
 				Resume ();
 
 			}
 			else {
-				
+
 				Time.timeScale = 0;
 				concaves.SetActive (false);
 				buttons.SetActive (true);
@@ -45,6 +46,7 @@ public class Pause : MonoBehaviour {
 				}
 
 			}
+
 
 		}
 	}

@@ -27,7 +27,7 @@ public class MouseHover : MonoBehaviour {
     }
 
 	void Update(){
-		if (Input.GetMouseButtonDown (0) && text.color == Color.cyan) {
+		if (Input.GetMouseButtonUp (0) && text.color == Color.cyan) {
 			
 			OnMouseExit ();
 
@@ -38,6 +38,8 @@ public class MouseHover : MonoBehaviour {
 			}
 			else if (this.tag == "quit")
 				Application.Quit ();
+				
+
 		}
 	}
 }
