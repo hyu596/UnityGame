@@ -35,7 +35,7 @@ public class RandomManager : MonoBehaviour
     private static Vector2[] LonelyPlace;
 
 	public Text scoreText;
-	private int score;
+	public int score;
 
 
     public void init(float x, float y)

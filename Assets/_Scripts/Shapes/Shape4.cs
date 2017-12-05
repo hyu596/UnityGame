@@ -116,30 +116,6 @@ public class Shape4 : MonoBehaviour {
 			}
 		}
 
-//		if (!still_moving) {
-//
-//			int x = (int)Mathf.Round (transform.position.x);
-//			int y = (int)Mathf.Round (transform.position.y);
-//			if (checkForValid (x, y)) {
-//				transform.position = new Vector2 (x, y);
-//				grid_temp.updateGridForSingleBlock (x, y);
-//				done = true;
-//
-//				SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer> ();
-//				spriteRenderer.sortingLayerName = "Grid";
-//
-//				BoxCollider2D[] collider = GetComponents<BoxCollider2D>();
-//				foreach (BoxCollider2D c in collider) {
-//					c.enabled = false;
-//				}
-//
-//				grid_temp.addShape (this.gameObject);
-//
-//			}
-//			else
-//				transform.position = origin_place;
-//
-//		}
 
 	}
 

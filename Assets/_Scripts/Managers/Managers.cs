@@ -51,8 +51,10 @@ public class Managers : MonoBehaviour
 
 		_timeManager = GetComponent<TimeManager> ();
 
-
-
+		if (PlayerPrefs.GetInt ("highest") != null)
+			StaticClass.highestScore = PlayerPrefs.GetInt ("highest");
+		else
+			StaticClass.highestScore = 0;
     }
 
     private void addGrid(int x, int y)
