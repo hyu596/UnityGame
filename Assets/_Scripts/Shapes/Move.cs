@@ -37,6 +37,8 @@ public class Move : MonoBehaviour
 
 
 	public IEnumerator SmoothFall (Vector3 end, int y=-100){ 
+
+		this.transform.localScale = new Vector3 (1f, 1f, 1f); 
 		
 		coroutine = true;
 		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
@@ -150,6 +152,21 @@ public class Move : MonoBehaviour
 			} else {
 				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				transform.position = destination - pivot;
+
+				if (checkForValid ()) {
+					int x = (int)Mathf.Round (transform.position.x);
+					int y = grid_temp.findPosY (this, x);
+					if (y != -1) {
+						grid_temp.addShadow (this, x, y);
+					} 
+
+//					grid_temp.clearShadow ();
+				} else {
+					if (grid_temp != null)
+						grid_temp.clearShadow ();
+				}
+
+					
 			}
 		}
 

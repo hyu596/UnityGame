@@ -41,9 +41,10 @@ public class Managers : MonoBehaviour
 
         _gridManager = new GridManager[maxSize];
 
-		addGrid(-3, -2);
-		addGrid(3, -2);
-        addGrid(0, 2);
+		addGrid(-2, -3);
+		addGrid(3, -3);
+        addGrid(3, 2);
+        addGrid(-2, 2);
 
         _randomManager = GetComponent<RandomManager>();
         _randomManager.init(3f, -4.5f);

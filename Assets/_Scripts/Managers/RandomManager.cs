@@ -110,7 +110,7 @@ public class RandomManager : MonoBehaviour
         }
 
         //the number of Lonely shape try to add should base the point or if full grid
-        //tryTOAddLonely(1);
+        tryTOAddLonely(1);
    
         
 
@@ -199,7 +199,6 @@ public class RandomManager : MonoBehaviour
     string GetRandomShape()
     {
         int randomindex = Random.Range(1, 8);
-        Debug.Log("Shape" + randomindex);
         return "Shape" + randomindex;
 
     }
