@@ -22,7 +22,7 @@ public class Move : MonoBehaviour
 	private float fallingSpeed;
 	private int dest_y, color;
 	private bool done, coroutine;
-	private GridManager grid_temp;
+	private GridManager grid_temp, prev_grid;
 
 	protected void Awake () {
 		still_moving = false;
@@ -77,6 +77,8 @@ public class Move : MonoBehaviour
 			if (g && g.validArea (transform.position.x + x1,
 				transform.position.x + x2, transform.position.y + y1,
 				transform.position.y + y2)) {
+				if (grid_temp != null && g != grid_temp)
+					prev_grid = grid_temp;
 				grid_temp = g;
 				return true;
 			}
@@ -159,6 +161,10 @@ public class Move : MonoBehaviour
 					int y = grid_temp.findPosY (this, x);
 					if (y != -1) {
 						grid_temp.addShadow (this, x, y);
+						if (prev_grid != null) {
+							prev_grid.clearShadow ();
+							prev_grid = null;
+						}
 					} 
 
 //					grid_temp.clearShadow ();
