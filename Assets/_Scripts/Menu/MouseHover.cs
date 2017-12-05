@@ -8,15 +8,15 @@ using TMPro;
 public class MouseHover : MonoBehaviour {
 
 	private TextMesh text;
-   // private TextMeshPro textmeshPro;
+    private TextMeshPro textmeshPro;
 
     // Use this for initialization
     void Start () {
 		text = GetComponent<TextMesh> ();
-    //    textmeshPro = GetComponent<TextMeshPro>();
+        textmeshPro = GetComponent<TextMeshPro>() ?? gameObject.AddComponent<TextMeshPro>();
 
-    //    textmeshPro.color = Color.white;
-        text.color = Color.white;
+        textmeshPro.color = Color.red;
+        text.color = Color.red;
 	}
 
 	void OnMouseEnter(){
