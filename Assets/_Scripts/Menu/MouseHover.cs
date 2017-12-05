@@ -13,15 +13,12 @@ public class MouseHover : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		text = GetComponent<TextMesh> ();
-        textmeshPro = GetComponent<TextMeshPro>() ?? gameObject.AddComponent<TextMeshPro>();
-
-        textmeshPro.color = Color.red;
-        text.color = Color.red;
+        textmeshPro = GetComponent<TextMeshPro>();
 	}
 
 	void OnMouseEnter(){
 		text.color = Color.cyan;
-    //    textmeshPro.color = Color.cyan;
+        textmeshPro.color = Color.cyan;
     }
 		
 	void OnMouseExit(){
