@@ -71,13 +71,18 @@ public class Shape4 : MonoBehaviour {
 		}
 
 		if (still_moving) {
+			
+			int x = (int)Mathf.Round (transform.position.x);
+			int y = (int)Mathf.Round (transform.position.y);
+
 			if (Input.GetMouseButtonUp (0)) {
 
 				still_moving = false;
-				
-				int x = (int)Mathf.Round (transform.position.x);
-				int y = (int)Mathf.Round (transform.position.y);
+
 				if (checkForValid (x, y)) {
+
+					this.transform.localScale = new Vector3 (1f, 1f, 1f); 
+
 					transform.position = new Vector2 (x, y);
 					grid_temp.updateGridForSingleBlock (x, y);
 					done = true;
@@ -97,6 +102,15 @@ public class Shape4 : MonoBehaviour {
 					transform.position = origin_place;
 				
 			} else {
+
+				if (checkForValid (x, y))
+					grid_temp.addShadowSingleBlock (x, y);
+				else{
+					if (grid_temp != null)
+						grid_temp.clearShadow ();
+				}
+					
+
 				destination = Camera.main.ScreenToWorldPoint (Input.mousePosition);	
 				transform.position = destination - pivot;
 			}

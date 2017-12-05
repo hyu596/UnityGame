@@ -194,7 +194,6 @@ public class RandomManager : MonoBehaviour
     string GetRandomShape()
     {
         int randomindex = Random.Range(1, 8);
-        Debug.Log("Shape" + randomindex);
         return "Shape" + randomindex;
 
     }

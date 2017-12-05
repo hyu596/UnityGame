@@ -146,8 +146,12 @@ public class GridManager : MonoBehaviour {
 		int temp = -1;
 		if (cells == 0) {
 			foreach (GameObject obj in fixedShapes) {
-				if (temp == -1)
-					temp = obj.GetComponent<Move> ().getColor ();
+				if (temp == -1) {
+					if(obj.GetComponent<Move>() != null)
+						temp = obj.GetComponent<Move> ().getColor ();
+					else
+						temp = obj.GetComponent<Shape4> ().getColor ();
+				}
 				else {
 					if (obj.GetComponent<Move> () && temp != obj.GetComponent<Move> ().getColor ())
 						sameColor = false;
@@ -176,6 +180,70 @@ public class GridManager : MonoBehaviour {
 		min_y = new int[3]{0, 0, 0};
 		cells = 9;
 		check = new bool[9]{ false, false, false, false, false, false, false, false, false };
+
+		clearShadow ();
+
+	}
+
+	public void addShadow(Move obj, float x, float y){
+
+		int[] corresponding = new int[3]{ 1, 0, 2 };
+//
+//
+		clearShadow();
+		
+		int pivot_x = (int)x - mid_x + 1;
+		int pivot_y = (int)y + bot_y;
+
+		int index_offset = 1 - pivot_x;
+
+		int start = 0, end = 3;
+		if (pivot_x == 2)
+			start = 1;
+		else if (pivot_x == 0)
+			end = 2;
+
+		for (int i = start; i < end; i++) {
+			int a = obj.accumulate [i + index_offset], h = obj.heights [i + index_offset];
+			for(int j=0; j<Mathf.Min(a, h); j++){
+				int j_temp = j;
+				if (a != h)
+					j_temp += 1;
+				SpriteRenderer spriteRenderer = gameGridcol [pivot_y + j_temp - 1].row [corresponding[i]].GetComponent<SpriteRenderer> ();
+				spriteRenderer.color = Color.gray;
+			}
+		}
+
+
+	}
+
+	public void addShadowSingleBlock(int x, int y){
+
+		clearShadow ();
+	
+		int pivot_x = (int)x - mid_x + 1;
+		int pivot_y = (int)y - bot_y;
+
+		Debug.Log (pivot_y);
+
+		int[] corresponding = new int[3]{ 1, 0, 2 };
+
+		SpriteRenderer spriteRenderer = gameGridcol [pivot_y].row [corresponding[pivot_x]].GetComponent<SpriteRenderer> ();
+		spriteRenderer.color = Color.gray;
+
+	}
+
+	public void clearShadow(){
+		
+		int[] corresponding = new int[3]{ 1, 0, 2 };
+
+
+		for (int i = 0; i < 9; i++) {
+
+			int row = (int) Mathf.Floor( i / 3 ), index = i % 3;
+			SpriteRenderer spriteRenderer = gameGridcol [row].row [corresponding[index]].GetComponent<SpriteRenderer> ();
+			spriteRenderer.color = Color.white;
+		}
 
 	}
 
