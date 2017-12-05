@@ -26,6 +26,8 @@ public class Pause : MonoBehaviour {
 
 	void Update(){
 		if (Input.GetMouseButtonDown (0) && spriteRenderer.color == Color.cyan) {
+
+			OnMouseExit ();
 			
 			if (Time.timeScale == 0) {
 				

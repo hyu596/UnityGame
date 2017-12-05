@@ -25,6 +25,7 @@ public class Resume : MonoBehaviour {
 
 	void Update(){
 		if (Input.GetMouseButtonDown (0) && text.color == Color.cyan) {
+			OnMouseExit ();
 			pause.Resume ();
 		}
 	}
