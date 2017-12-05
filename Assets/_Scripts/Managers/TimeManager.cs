@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour {
 		}
 
 		if (totalTime <= 0) {
-			StaticClass.CrossSceneInformation = Managers.Random.scoreText.text;
+			StaticClass.CrossSceneInformation = Managers.Random.score;
 			SceneManager.LoadScene (2);
 		}
 	}

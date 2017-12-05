@@ -193,7 +193,8 @@ public class GridManager : MonoBehaviour {
 		clearShadow();
 		
 		int pivot_x = (int)x - mid_x + 1;
-		int pivot_y = (int)y + bot_y;
+		int pivot_y = (int)y;
+
 
 		int index_offset = 1 - pivot_x;
 
@@ -209,7 +210,7 @@ public class GridManager : MonoBehaviour {
 				int j_temp = j;
 				if (a != h)
 					j_temp += 1;
-				SpriteRenderer spriteRenderer = gameGridcol [pivot_y + j_temp - 1].row [corresponding[i]].GetComponent<SpriteRenderer> ();
+				SpriteRenderer spriteRenderer = gameGridcol [pivot_y + j_temp].row [corresponding[i]].GetComponent<SpriteRenderer> ();
 				spriteRenderer.color = Color.gray;
 			}
 		}
@@ -223,8 +224,6 @@ public class GridManager : MonoBehaviour {
 	
 		int pivot_x = (int)x - mid_x + 1;
 		int pivot_y = (int)y - bot_y;
-
-		Debug.Log (pivot_y);
 
 		int[] corresponding = new int[3]{ 1, 0, 2 };
 

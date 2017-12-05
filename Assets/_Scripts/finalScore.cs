@@ -5,14 +5,20 @@ using UnityEngine.UI;
 
 public class finalScore : MonoBehaviour {
 
-	private Text scoreText;
+	public Text scoreText;
+	public Text highestScoreText;
 
 	// Use this for initialization
 	void Start () {
 
-		scoreText = GetComponent<Text> ();
-		scoreText.text = StaticClass.CrossSceneInformation;
-		
+		scoreText.text = "Score: " + StaticClass.CrossSceneInformation;
+
+		if (StaticClass.highestScore < StaticClass.CrossSceneInformation) {
+			StaticClass.highestScore = StaticClass.CrossSceneInformation;
+			PlayerPrefs.SetInt ("highest", StaticClass.highestScore);
+			PlayerPrefs.Save ();
+		}
+		highestScoreText.text = "Highest Score: " + StaticClass.highestScore;
 	}
 
 }
