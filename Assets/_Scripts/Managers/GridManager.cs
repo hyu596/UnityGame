@@ -37,7 +37,7 @@ public class GridManager : MonoBehaviour
         left = mid_x - 1.5f;
         right = mid_x + 1.5f;
         bot = bot_y - 0.5f;
-        top = bot_y + 4.5f;
+        top = bot_y + 4f;
         min_y = new int[3] { 0, 0, 0 };
         cells = 9;
 

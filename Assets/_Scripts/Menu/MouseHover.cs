@@ -30,9 +30,12 @@ public class MouseHover : MonoBehaviour {
     }
 
 	void Update(){
-		if (Input.GetMouseButtonDown (0) ) {
-			if (this.tag == "start")
+		if (Input.GetMouseButtonDown (0) && text.color == Color.cyan) {
+			if (this.tag == "start") {
 				SceneManager.LoadScene (1);
+				if (Time.timeScale == 0)
+					Time.timeScale = 1;
+			}
 			else if (this.tag == "quit")
 				Application.Quit ();
 		}
