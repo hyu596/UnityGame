@@ -15,6 +15,7 @@ public class RandomManager : MonoBehaviour
     private int lonelyY1;
     private int lonelyY2;
     private int lonelyY3;
+    private int basepoint;
 
     private Vector2 lin1_1;
     private Vector2 lin1_2;
@@ -29,9 +30,9 @@ public class RandomManager : MonoBehaviour
 	private bool moving;
 
     private Move[] allwatingObject;
-    private Shape4[] allLonely;
-    private Color[] colors;
-    private Vector2[] LonelyPlace;
+    private static Shape4[] allLonely;
+    private static Color[] colors;
+    private static Vector2[] LonelyPlace;
 
 	public Text scoreText;
 	private int score;
@@ -43,12 +44,12 @@ public class RandomManager : MonoBehaviour
         c1 = (int)(x - 7f);
         c2 = (int)(x -3);
         c3 = (int)(x+1);
-        r1 = (int)(y + 1.5f);
-        r2 = (int)(y - 3f);
+        r1 = (int)(y-2);
+        r2 = (int)(y - 5f);
         lonelyX = (int) (x  - 8f);
-        lonelyY1 = (int)(y + 8f);
+        lonelyY1 = (int)(y + 8.5f);
         lonelyY2 = (int)(y + 10f);
-        lonelyY3 = (int)(y + 6f); 
+        lonelyY3 = (int)(y + 7.5f); 
 
         lin1_1 = new Vector2(c1, r1);
         lin1_2 = new Vector2(c1, r2);
@@ -109,10 +110,13 @@ public class RandomManager : MonoBehaviour
         }
 
         //the number of Lonely shape try to add should base the point or if full grid
-        tryTOAddLonely(1);
+        //tryTOAddLonely(1);
+   
+        
 
 
-		if (moving) {
+
+        if (moving) {
 			if ((!allwatingObject [0].isRunning ()) && (!allwatingObject [1].isRunning ()) && (!allwatingObject [2].isRunning ())) {
 				generateSecondLine ();
 				moving = false;
@@ -152,7 +156,7 @@ public class RandomManager : MonoBehaviour
         }
 
     }
-    public void tryTOAddLonely ( int NumbertryToadd)
+    public static void tryTOAddLonely ( int NumbertryToadd)
     {
         while (NumbertryToadd > 0)
         {
@@ -161,13 +165,14 @@ public class RandomManager : MonoBehaviour
                 if (allLonely[i].done)
                 {
                     SpeawnLonely(i);
+                    break;
                 }
             }
             NumbertryToadd--;
         }
         NumbertryToadd = 0;
     }
-    public void SpeawnLonely (int index)
+    public static void SpeawnLonely (int index)
     {
         GameObject newLonely = (GameObject)Instantiate(Resources.Load("Lonely", typeof(GameObject)), LonelyPlace[index] , Quaternion.identity);
         Shape4 move = newLonely.GetComponent<Shape4>();

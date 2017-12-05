@@ -168,7 +168,9 @@ public class GridManager : MonoBehaviour {
 			
 			fixedShapes.Clear ();
 			revertOrigin ();
-		}
+            
+        }
+
 	}
 
 	private void revertOrigin(){
@@ -176,7 +178,7 @@ public class GridManager : MonoBehaviour {
 		min_y = new int[3]{0, 0, 0};
 		cells = 9;
 		check = new bool[9]{ false, false, false, false, false, false, false, false, false };
-
-	}
+        RandomManager.tryTOAddLonely(1);
+    }
 
 }
