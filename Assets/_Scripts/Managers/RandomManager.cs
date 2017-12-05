@@ -150,7 +150,7 @@ public class RandomManager : MonoBehaviour
             int y = (int)allwatingObject[i].transform.position.y;
 			if (y < r1 && !allwatingObject[i].isDone())
             {
-				StartCoroutine (allwatingObject [i].SmoothFall (new Vector3 (x, r1, 0f)));
+				StartCoroutine (allwatingObject [i].SmoothFall (new Vector3 (x, r1, 0f), -100, false));
             }
 
         }

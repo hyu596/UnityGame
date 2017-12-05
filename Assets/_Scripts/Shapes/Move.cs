@@ -36,9 +36,10 @@ public class Move : MonoBehaviour
 	}
 
 
-	public IEnumerator SmoothFall (Vector3 end, int y=-100){ 
+	public IEnumerator SmoothFall (Vector3 end, int y=-100, bool grid = true){ 
 
-		this.transform.localScale = new Vector3 (1f, 1f, 1f); 
+		if(grid)
+			this.transform.localScale = new Vector3 (1f, 1f, 1f); 
 		
 		coroutine = true;
 		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
