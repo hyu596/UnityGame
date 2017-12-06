@@ -6,7 +6,7 @@ public class Shape3_2 : Move {
 
 	void Awake(){
 		base.Awake ();
-		base.init (new int[]{ 0, 2, 0 }, new int[]{0, 2, 0}, 2);
+		base.init (new int[]{ 0, 2, 0 }, new int[]{0, 2, 0}, 2, 6);
 	}
 
 }

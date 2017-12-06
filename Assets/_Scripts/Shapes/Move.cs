@@ -23,6 +23,7 @@ public class Move : MonoBehaviour
 	private int dest_y, color;
 	private bool done, coroutine;
 	private GridManager grid_temp, prev_grid;
+	private int next;
 
 	protected void Awake () {
 		still_moving = false;
@@ -33,6 +34,7 @@ public class Move : MonoBehaviour
 		accumulate = new int[3];
 		heights = new int[3];
 		color = 0;
+
 	}
 
 
@@ -94,12 +96,13 @@ public class Move : MonoBehaviour
         return transform.position.y > -8 && TimeManager.totalTime > 0;
     }
 
-	protected void init(int[] a, int[] h, int c){
+	protected void init(int[] a, int[] h, int c, int n){
 		for (int i = 0; i < 3; i++) {
 			accumulate [i] = a [i];
 			heights [i] = h [i];
 		}
 		counts = c;
+		next = n;
 	}
 
 	protected void Update () {
@@ -122,6 +125,14 @@ public class Move : MonoBehaviour
 
 		if (still_moving) {
 			if (Input.GetMouseButtonUp (0)) {
+
+				if(origin_place == (Vector2)transform.position){
+//				if (Vector2.Equals(origin_place, transform.position)) {
+					Rotate ();
+					return;
+				}
+				
+
 				still_moving = false;
 //				if (!checkForValid () || !Managers.Random.isInFirstLine(((int)origin_place.y))) {
 				if (!checkForValid ()) {
@@ -149,6 +160,8 @@ public class Move : MonoBehaviour
 						foreach (BoxCollider2D c in collider) {
 							c.enabled = false;
 						}
+
+						Managers.Time.newRound ();
 
 					}
 				}
@@ -179,6 +192,10 @@ public class Move : MonoBehaviour
 
 	}
 
+	private void Rotate(){
+		Managers.Random.Rotate (this, next, color);
+	}
+
 	public bool isDone(){ return done; }
 	public bool isRunning() {
 		return coroutine;
@@ -190,7 +207,7 @@ public class Move : MonoBehaviour
 
 	public int getColor(){return color;}
 
-
+	public int index_a { get; set;}
 
 
 }
