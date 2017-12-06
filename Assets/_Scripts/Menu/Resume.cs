@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Resume : MonoBehaviour {
 
@@ -10,21 +11,22 @@ public class Resume : MonoBehaviour {
 	public Pause pause;
 
 	private TextMesh text;
+    private TextMeshProUGUI textmeshPro;
 
-	void Start(){
-		text = GetComponent<TextMesh> ();
-	}
+    void Start(){
+        textmeshPro = GetComponent<TextMeshProUGUI>();
+    }
 
 	void OnMouseEnter(){
-		text.color = Color.cyan;
-	}
+        textmeshPro.color = Color.cyan;
+    }
 
 	void OnMouseExit(){
-		text.color = Color.white;
-	}
+        textmeshPro.color = Color.white;
+    }
 
 	void Update(){
-		if (Input.GetMouseButtonUp (0) && text.color == Color.cyan) {
+		if (Input.GetMouseButtonUp (0) && textmeshPro.color == Color.cyan) {
 			OnMouseExit ();
 			pause.Resume ();
 		}

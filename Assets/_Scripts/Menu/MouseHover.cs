@@ -7,27 +7,23 @@ using TMPro;
 
 public class MouseHover : MonoBehaviour {
 
-	private TextMesh text;
-    private TextMeshPro textmeshPro;
+    private TextMeshProUGUI textmeshPro;
 
     // Use this for initialization
     void Start () {
-		text = GetComponent<TextMesh> ();
-        textmeshPro = GetComponent<TextMeshPro>();
+        textmeshPro = GetComponent<TextMeshProUGUI>();
 	}
 
 	void OnMouseEnter(){
-		text.color = Color.cyan;
         textmeshPro.color = Color.cyan;
     }
 		
 	void OnMouseExit(){
-		text.color = Color.white;
-     //   textmeshPro.color = Color.white;
+        textmeshPro.color = Color.white;
     }
 
 	void Update(){
-		if (Input.GetMouseButtonUp (0) && text.color == Color.cyan) {
+		if (Input.GetMouseButtonUp (0) && textmeshPro.color == Color.cyan) {
 			
 			OnMouseExit ();
 
