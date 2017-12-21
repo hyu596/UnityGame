@@ -43,8 +43,14 @@ public class Managers : MonoBehaviour
 
 		addGrid(-2, -3);
 		addGrid(3, -3);
+
         addGrid(3, 2);
         addGrid(-2, 2);
+
+//		addGrid(0, 2);
+
+//		addGrid(-3, 0);
+//		addGrid(3, 0);
 
         _randomManager = GetComponent<RandomManager>();
         _randomManager.init(3f, -4.5f);
@@ -55,7 +61,7 @@ public class Managers : MonoBehaviour
 			StaticClass.highestScore = PlayerPrefs.GetInt ("highest");
 		else
 			StaticClass.highestScore = 0;
-    }
+   }
 
     private void addGrid(int x, int y)
     {
@@ -74,4 +80,6 @@ public class Managers : MonoBehaviour
     {
         return index >= maxSize - 1;
     }
+		
+		
 }

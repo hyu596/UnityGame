@@ -188,8 +188,10 @@ public class GridManager : MonoBehaviour
                 Destroy(obj);
             }
 
-            if (sameColor)
-                Managers.Random.increScore(10);
+			if (sameColor) {
+				Managers.Random.increScore (10);
+				Managers.Random.tryTOAddLonely (1);
+			}
             else
                 Managers.Random.increScore(1);
 

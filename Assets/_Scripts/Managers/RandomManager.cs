@@ -33,6 +33,9 @@ public class RandomManager : MonoBehaviour
     private static Shape4[] allLonely;
     private static Color[] colors;
     private static Vector2[] LonelyPlace;
+	private int[] shapes = new int[10]{ 1, 1, 1, 3, 3, 3, 7, 7, 7, 7 };
+
+	private string[] types;
 
 	public Text scoreText;
 	public int score;
@@ -76,12 +79,15 @@ public class RandomManager : MonoBehaviour
 
 		score = 0;
 
+		types = new string[8]{ "Shape1", "Shape2", "Shape3", "Shape4", "Shape5", "Shape6", "Shape7", "Shape8" };
+//		shapes = new int[10]{ 1, 1, 1, 3, 3, 3, 7, 7, 7, 7 };
+
     }
     private void generateLonely()
     {
         SpeawnLonely(0);
         SpeawnLonely(1);
-        SpeawnLonely(2);
+//        SpeawnLonely(2);        
     }
     
 
@@ -106,11 +112,12 @@ public class RandomManager : MonoBehaviour
         if (IsFirstlineEmpt())
         {
             Move2ndLineUp();
-			Managers.Time.newRound ();
+//			Managers.Time.newRound ();
         }
 
+
         //the number of Lonely shape try to add should base the point or if full grid
-        tryTOAddLonely(1);
+//        tryTOAddLonely(1);
    
         
 
@@ -146,6 +153,7 @@ public class RandomManager : MonoBehaviour
         for (int i = 0; i < 3; i += 1)
         {
             allwatingObject[i] = allwatingObject[i + 3];
+			allwatingObject [i].index_a -= 3;
             int x = (int)allwatingObject[i].transform.position.x;
             int y = (int)allwatingObject[i].transform.position.y;
 			if (y < r1 && !allwatingObject[i].isDone())
@@ -156,16 +164,16 @@ public class RandomManager : MonoBehaviour
         }
 
     }
-    public static void tryTOAddLonely ( int NumbertryToadd)
+    public void tryTOAddLonely ( int NumbertryToadd)
     {
         while (NumbertryToadd > 0)
         {
             for (int i = 0; i <3; i++)
             {
-                if (allLonely[i].done)
+                if (allLonely[i] == null || allLonely[i].done)
                 {
                     SpeawnLonely(i);
-                    break;
+					return;
                 }
             }
             NumbertryToadd--;
@@ -187,6 +195,7 @@ public class RandomManager : MonoBehaviour
     {
         GameObject nextShape = (GameObject)Instantiate(Resources.Load(GetRandomShape(), typeof(GameObject)), place, Quaternion.identity);
         Move move = nextShape.GetComponent<Move>();
+		move.index_a = index;
         Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
 		int picked = Random.Range (0, 3);
 		foreach (Renderer r in allchild)
@@ -198,8 +207,11 @@ public class RandomManager : MonoBehaviour
 
     string GetRandomShape()
     {
-        int randomindex = Random.Range(1, 8);
-        return "Shape" + randomindex;
+//        int randomindex = Random.Range(1, 8);
+		int rnd = Random.Range(0, 9);
+//		Debug.Log (shapes[rnd]);
+		int randomindex = shapes[rnd];
+		return "Shape" + randomindex;
 
     }
     int GetRandomColor()
@@ -217,6 +229,24 @@ public class RandomManager : MonoBehaviour
 	public void increScore(int s){
 		score += s;
 		scoreText.text = "Score: " + score;
+	}
+
+	public void Rotate(Move obj, int n, int c){
+
+		Vector2 pos = obj.transform.position;
+		int index = obj.index_a;
+		Debug.Log (index);
+		Destroy (obj.gameObject);
+
+		GameObject nextShape = (GameObject)Instantiate(Resources.Load(types[n], typeof(GameObject)), pos, Quaternion.identity);
+		Move move = nextShape.GetComponent<Move>();
+		move.index_a = index;
+		Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
+		foreach (Renderer r in allchild)
+			r.GetComponent<SpriteRenderer> ().color = colors [c];
+
+		move.assignColor (c);
+		allwatingObject[index] = move;
 	}
 
 }
