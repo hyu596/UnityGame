@@ -9,8 +9,6 @@ public class Resume : MonoBehaviour {
 
 //	public GameObject concaves, buttons;
 	public Pause pause;
-
-	private TextMesh text;
     private TextMeshProUGUI textmeshPro;
 
     void Start(){
@@ -24,12 +22,14 @@ public class Resume : MonoBehaviour {
 	void OnMouseExit(){
         textmeshPro.color = Color.white;
     }
-
-	void Update(){
-		if (Input.GetMouseButtonUp (0) && textmeshPro.color == Color.cyan) {
-			OnMouseExit ();
-			pause.Resume ();
-		}
-	}
+ 
+    void Update()
+    {
+        if (Input.GetMouseButtonUp(0) && textmeshPro.color == Color.cyan)
+        {
+            OnMouseExit();
+            pause.Resume();
+        }
+    }
 
 }

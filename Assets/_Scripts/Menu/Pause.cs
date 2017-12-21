@@ -13,7 +13,6 @@ public class Pause : MonoBehaviour {
 
 	void Start(){
 		spriteRenderer = GetComponent<SpriteRenderer> ();
-		objs = GameObject.FindGameObjectsWithTag ("gameObject");
 	}
 
 	void OnMouseEnter(){
@@ -29,6 +28,8 @@ public class Pause : MonoBehaviour {
 
 
 			OnMouseExit ();
+
+			objs = GameObject.FindGameObjectsWithTag ("gameObject");
 
 			if (Time.timeScale == 0) {
 
