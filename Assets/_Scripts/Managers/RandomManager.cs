@@ -37,6 +37,8 @@ public class RandomManager : MonoBehaviour
 
 	private string[] types;
 
+	private int rounds;
+
 	public Text scoreText;
 	public int score;
 
@@ -82,6 +84,8 @@ public class RandomManager : MonoBehaviour
 		types = new string[8]{ "Shape1", "Shape2", "Shape3", "Shape4", "Shape5", "Shape6", "Shape7", "Shape8" };
 //		shapes = new int[10]{ 1, 1, 1, 3, 3, 3, 7, 7, 7, 7 };
 
+		rounds = 0;
+
     }
     private void generateLonely()
     {
@@ -112,7 +116,14 @@ public class RandomManager : MonoBehaviour
         if (IsFirstlineEmpt())
         {
             Move2ndLineUp();
+			rounds++;
 //			Managers.Time.newRound ();
+//			Managers.Time.easier();
+
+			if ((rounds >= 4 || Managers.Time.isEasy ()) && Managers.Time.easier()) {
+				rounds = 0;
+			}
+				
         }
 
 
@@ -235,7 +246,6 @@ public class RandomManager : MonoBehaviour
 
 		Vector2 pos = obj.transform.position;
 		int index = obj.index_a;
-		Debug.Log (index);
 		Destroy (obj.gameObject);
 
 		GameObject nextShape = (GameObject)Instantiate(Resources.Load(types[n], typeof(GameObject)), pos, Quaternion.identity);

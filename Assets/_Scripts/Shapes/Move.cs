@@ -93,7 +93,7 @@ public class Move : MonoBehaviour
 
     private bool abletomove()
     {
-        return transform.position.y > -8 && TimeManager.totalTime > 0;
+        return transform.position.y > -8;
     }
 
 	protected void init(int[] a, int[] h, int c, int n){

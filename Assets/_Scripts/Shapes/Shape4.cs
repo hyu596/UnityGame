@@ -26,10 +26,10 @@ public class Shape4 : MonoBehaviour {
 		color = 0;
 	}
 
-    private bool abletomove()
-    {
-        return TimeManager.totalTime > 0;
-    }
+//    private bool abletomove()
+//    {
+//        return TimeManager.totalTime > 0;
+//    }
 
     public int getColor(){
 		return color;
@@ -55,7 +55,7 @@ public class Shape4 : MonoBehaviour {
 		if (done)
 			return;
 
-		if (Input.GetMouseButtonDown (0) && abletomove()) {
+		if (Input.GetMouseButtonDown (0)) {
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D hit = Physics2D.GetRayIntersection(ray,Mathf.Infinity);

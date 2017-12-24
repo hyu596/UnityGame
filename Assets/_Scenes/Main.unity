@@ -901,7 +901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   remainingTime: {fileID: 1174672038}
-  roundTime: {fileID: 1868932146}
 --- !u!1 &1868932144
 GameObject:
   m_ObjectHideFlags: 0
