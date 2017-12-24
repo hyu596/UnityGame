@@ -30,12 +30,17 @@ public class RandomManager : MonoBehaviour
 	private bool moving;
 
     private Move[] allwatingObject;
+    private GameObject[] allshap;
     private static Shape4[] allLonely;
     private static Color[] colors;
+    private static Color[] colors_2;
     private static Vector2[] LonelyPlace;
 	private int[] shapes = new int[10]{ 1, 1, 1, 3, 3, 3, 7, 7, 7, 7 };
+    Color darkR = new Color(0.3f, 0, 0);
+    Color darkG = new Color(0, 0.3f, 0);
+    Color darkB = new Color(0, 0, 0.3f);
 
-	private string[] types;
+    private string[] types;
 
 	public Text scoreText;
 	public int score;
@@ -65,8 +70,10 @@ public class RandomManager : MonoBehaviour
         lonely3 = new Vector2(lonelyX, lonelyY3);
 
         allwatingObject = new Move[6];
+        allshap = new GameObject[6];
         allLonely = new Shape4[3];
 		colors = new Color[3]{ Color.red, Color.blue, Color.green };
+        colors_2 = new Color[3] { darkR, darkB, darkG };
         LonelyPlace = new Vector2[3] { lonely1, lonely2, lonely3 };
 
         generateFirstLine();
@@ -152,6 +159,20 @@ public class RandomManager : MonoBehaviour
 
         for (int i = 0; i < 3; i += 1)
         {
+            Component[] allchild = allshap[i+3].GetComponentsInChildren(typeof(Renderer));
+            foreach (Renderer r in allchild)
+                if (r.GetComponent<SpriteRenderer>().color.Equals(darkB))
+                {
+                    r.GetComponent<SpriteRenderer>().color = Color.blue;
+                    Debug.Log("hi");
+                }else if(r.GetComponent<SpriteRenderer>().color.Equals(darkG))
+                {
+                    r.GetComponent<SpriteRenderer>().color = Color.green;
+                }
+                else
+                {
+                    r.GetComponent<SpriteRenderer>().color = Color.red;
+                }
             allwatingObject[i] = allwatingObject[i + 3];
 			allwatingObject [i].index_a -= 3;
             int x = (int)allwatingObject[i].transform.position.x;
@@ -198,11 +219,20 @@ public class RandomManager : MonoBehaviour
 		move.index_a = index;
         Component[] allchild = nextShape.GetComponentsInChildren(typeof(Renderer));
 		int picked = Random.Range (0, 3);
-		foreach (Renderer r in allchild)
-			r.GetComponent<SpriteRenderer> ().color = colors [picked];
+        foreach (Renderer r in allchild)
+            if (place.y == r1)
+            {
+                r.GetComponent<SpriteRenderer>().color = colors[picked];
+            }else
+            {
+                r.GetComponent<SpriteRenderer>().color = colors_2[picked];
+            }
+            
 
-		move.assignColor (picked);
-		allwatingObject[index] = move;
+        move.assignColor (picked);
+        allshap[index] = nextShape;
+        allwatingObject[index] = move;
+        
     }
 
     string GetRandomShape()
@@ -247,6 +277,7 @@ public class RandomManager : MonoBehaviour
 
 		move.assignColor (c);
 		allwatingObject[index] = move;
+   //     allshap[index] = nextShape;
 	}
 
 }
